@@ -1,8 +1,9 @@
 import axios from 'axios';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import apis from '../axios/api';
+import { cookies } from '../shared/cookies';
 
 function Login() {
   const navi = useNavigate();
@@ -18,12 +19,26 @@ function Login() {
     });
   };
 
-const submitButtonHandler = (event) => {
+const submitButtonHandler = async (event) => {
   event.preventDefault();
   // 서버에 보내기 (POST요청)
-  apis.post("/user/login", user);
+//   await apis.post("/users/login", user);
+// };
+
+  // 쿠키박기 (위에거는 지우고)
+  const result = await apis.post("/user/login", user);
+  cookies.set("token", result.data.token, {path: "/"})
   console.log(user);
   };
+
+  // 쿠키가 있는지 확인, 쿠키가 있으면 home으로 보내기
+  // useEffect(()=> {
+  //   const token = cookies.get("token");
+  //   // console.log(token);
+  //   if(token) {
+  //     navi("/home")
+  //   }
+  // }, []);
 
 
 

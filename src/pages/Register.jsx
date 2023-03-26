@@ -8,9 +8,9 @@ function Register() {
         email: "",
         password: "",
         username: "",
-        privacy_term : true,
-        marketing_term: true,
-        gps_term : true
+        privacyTerm : true,
+        marketingTerm: true,
+        gpsTerm : true
     });
     
     const changeInputHandler = (event) => {
@@ -23,7 +23,7 @@ function Register() {
     const submitButtonHandler = (event) => {
         event.preventDefault();
         // 서버에 보내기 (POST요청)
-        axios.post("http://54.180.144.151/user/signup", user);
+        axios.post("http://54.180.144.151/users/signup", user);
         console.log(user);
     };
 
