@@ -4,6 +4,7 @@ import Home from '../pages/Home'
 import Login from '../pages/Login'
 import NotFound from '../pages/NotFound'
 import Post from '../pages/Post'
+import Product from '../pages/Product'
 import Register from '../pages/Register'
 
 function Router() {
@@ -13,8 +14,9 @@ function Router() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/product" element={<Product />} />
         <Route path="/post" element={<Post />} />
-        <Route path="/detail/:post_id" element={<Detail />} />
+        <Route path="/product/:id" element={<Detail />} />
         <Route path="/*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
