@@ -1,0 +1,59 @@
+{
+  "products": [
+    {
+      "name": "ㅇㅇㅇ",
+      "star": "2성급",
+      "score": "",
+      "address": "ㅇㅇㅇ",
+      "description": "ㅇㅇㅇ",
+      "mainImage": "",
+      "price": "",
+      "information": "ㅇㅇㅇ",
+      "id": 1
+    },
+    {
+      "name": "ㅇㅇㅇ",
+      "star": "1성급",
+      "score": "",
+      "address": "ㅇㅇㅇ",
+      "description": "ㅇㅇㅇ",
+      "mainImage": "",
+      "price": "",
+      "information": "ㅇㅇㅇ",
+      "id": 2
+    },
+    {
+      "name": "ㅇㅇㅇ",
+      "star": "2성급",
+      "score": "",
+      "address": "ㅇㅇㅇ",
+      "description": "ㅇㅇㅇ",
+      "mainImage": "",
+      "price": "",
+      "information": "ㅇㅇㅇ",
+      "id": 3
+    },
+    {
+      "name": "ㅇㅇㅇ",
+      "star": "2성급",
+      "score": "",
+      "address": "ㅇㅇㅇ",
+      "description": "ㅇㅇㅇ",
+      "mainImage": "",
+      "price": "",
+      "information": "ㅇㅇㅇ",
+      "id": 4
+    },
+    {
+      "name": "ㅇㅀㅇㅀ",
+      "star": "1성급",
+      "score": "",
+      "address": "ㅇㅀㅇㅀ",
+      "description": "ㅇㅀㅇㅀ",
+      "price": "",
+      "ownerComment": "",
+      "information": "ㅇㅀㅇㅀㅇㅀ",
+      "id": 5
+    }
+  ]
+}
