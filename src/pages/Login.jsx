@@ -3,8 +3,8 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import apis from '../axios/api';
+import GlobalStyle from '../components/GlobalStyle';
 import { cookies } from '../shared/cookies';
-import '../assets/font/Jalnan.ttf'
 
 function Login() {
   const navi = useNavigate();
@@ -72,6 +72,7 @@ const submitButtonHandler = async (event) => {
 
   return (
   <StPageContainer>
+    <GlobalStyle/>
     <StSection>
         <form onSubmit={submitButtonHandler}>
             <div>
@@ -179,8 +180,7 @@ const StPageContainer = styled.div`
   background: #fff;
   font-size: 18px;
   line-height: 44px;
-
-`
+`;
 const StSection = styled.section`
   width: 336px;
   height: 557px;
@@ -189,10 +189,11 @@ const StSection = styled.section`
 const StLogoWrapper = styled.strong`
   width: 336px;
   height: 56px;
-`
+`;
 const StLogo = styled.span`
   font-family: 'yg-jalnan';
-`
+  color: rgb(255,0,85);;
+`;
 const LogoImage = styled.img`
   width: 112px;
   height: 44px;
@@ -217,8 +218,8 @@ const StKaKaoLoginButton = styled.button`
     background: #FCE51E;
     color: rgb(59,29,20);
     font-weight: 550;
-    font-family: 'Pretendard', 'Apple SD Gothic Neo', '맑은 고딕', '맑은고딕', 'Malgun Gothic', sans-serif;
-    cursor: pointer;`
+    cursor: pointer;
+    `;
 const StFaceBookLoginButton = styled.button`
     width: 336px;
     height: 56px;
@@ -232,9 +233,8 @@ const StFaceBookLoginButton = styled.button`
     background: rgb(24,119,242);
     color: #fff;
     font-weight: 650;
-    font-family: 'Pretendard', 'Apple SD Gothic Neo', '맑은 고딕', '맑은고딕', 'Malgun Gothic', sans-serif;
     cursor: pointer;
-`
+`;
 const StNaverLoginButton = styled.button`
     width: 336px;
     height: 56px;
@@ -248,9 +248,8 @@ const StNaverLoginButton = styled.button`
     background: rgb(40,209,17);
     color: #fff;
     font-weight: 550;
-    font-family: 'Pretendard', 'Apple SD Gothic Neo', '맑은 고딕', '맑은고딕', 'Malgun Gothic', sans-serif;
     cursor: pointer;
-`
+`;
 const StSpace = styled.p`
     display: inline-block;
     top: 0;
@@ -264,7 +263,7 @@ const StSpace = styled.p`
     line-height: 40px;
     color: rgba(0,0,0,0.38);
     text-align: center;
-`
+`;
 const StInputBox = styled.input`
   width: 336px;
   height: 48px;
@@ -273,14 +272,15 @@ const StInputBox = styled.input`
   margin: 0 0 8px;
   padding: 0 16px 0 46px;
   box-sizing: border-box;
-`
+`;
 const StLoginButton = styled.button`
   width: 336px;
   height: 48px;
   margin-top: 16px;
   border-radius: 6px;
-  font-size: 16px;
-  line-height: 56px;
+  font-size: 14px;
+  line-height: 22px;
+  text-decoration: none solid rgba(0, 0, 0, 0.87);
   color: #fff;
   text-align: center;
   border: none;
