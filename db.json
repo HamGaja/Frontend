@@ -1,59 +1,14 @@
 {
   "products": [
     {
-      "name": "ㅇㅇㅇ",
+      "name": "최호텔",
       "star": "2성급",
       "score": "",
-      "address": "ㅇㅇㅇ",
-      "description": "ㅇㅇㅇ",
-      "mainImage": "",
+      "address": "강남구 ���호��로 126",
+      "description": "숙소소개 입니다.",
       "price": "",
-      "information": "ㅇㅇㅇ",
+      "ownerComment": "깨끗하게 써주세요깨끗하게 써주세요깨끗하게 써주세요깨끗하게 써주세요깨끗하게 써주세요깨끗하게 써주세요깨끗하게 써주세요깨끗하게 써주세요깨끗하게 써주세요깨끗하게 써주세요깨끗하게 써주세요깨끗하게 써주세요깨끗하게 써주세요깨끗하게 써주세요깨끗하게 써주세요",
       "id": 1
-    },
-    {
-      "name": "ㅇㅇㅇ",
-      "star": "1성급",
-      "score": "",
-      "address": "ㅇㅇㅇ",
-      "description": "ㅇㅇㅇ",
-      "mainImage": "",
-      "price": "",
-      "information": "ㅇㅇㅇ",
-      "id": 2
-    },
-    {
-      "name": "ㅇㅇㅇ",
-      "star": "2성급",
-      "score": "",
-      "address": "ㅇㅇㅇ",
-      "description": "ㅇㅇㅇ",
-      "mainImage": "",
-      "price": "",
-      "information": "ㅇㅇㅇ",
-      "id": 3
-    },
-    {
-      "name": "ㅇㅇㅇ",
-      "star": "2성급",
-      "score": "",
-      "address": "ㅇㅇㅇ",
-      "description": "ㅇㅇㅇ",
-      "mainImage": "",
-      "price": "",
-      "information": "ㅇㅇㅇ",
-      "id": 4
-    },
-    {
-      "name": "ㅇㅀㅇㅀ",
-      "star": "1성급",
-      "score": "",
-      "address": "ㅇㅀㅇㅀ",
-      "description": "ㅇㅀㅇㅀ",
-      "price": "",
-      "ownerComment": "",
-      "information": "ㅇㅀㅇㅀㅇㅀ",
-      "id": 5
     }
   ]
 }

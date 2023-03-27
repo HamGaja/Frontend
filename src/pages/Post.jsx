@@ -17,10 +17,8 @@ function Post() {
     score: '',
     address: '',
     description: '',
-    // mainImage: '',
     price: '',
     ownerComment: '',
-    // otherProducts: {},
   })
 
   // input onChange
@@ -48,9 +46,8 @@ function Post() {
       score: '',
       address: '',
       description: '',
-      mainImage: '',
       price: '',
-      information: '',
+      ownerComment: '',
     })
   }
 
@@ -92,7 +89,7 @@ function Post() {
           />
           {/* 메인 이미지 */}
           {/* <input type="file" name="mainImage" /> */}
-          사장님 한마디
+          숙소정보
           <input
             type="text"
             name="description"
@@ -103,8 +100,8 @@ function Post() {
           숙소정보
           <input
             type="text"
-            name="information"
-            value={products.information}
+            name="ownerComment"
+            value={products.ownerComment}
             onChange={changeInputHandler}
             required
           />

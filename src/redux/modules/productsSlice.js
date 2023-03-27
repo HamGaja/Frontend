@@ -3,7 +3,17 @@ import { createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
 
 const initialState = {
-  products: [],
+  products: [
+    {
+      name: '',
+      star: '',
+      score: '',
+      address: '',
+      description: '',
+      price: '',
+      ownerComment: '',
+    },
+  ],
   isLoading: false,
   error: null,
 }
@@ -28,6 +38,18 @@ export const __getProducts = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const response = await axios.get(`http://localhost:4000/products`)
+      return thunkAPI.fulfillWithValue(response.data)
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error)
+    }
+  }
+)
+// 게시물 디테일 조회 함수
+export const __getProductsDetail = createAsyncThunk(
+  '__getProductsDetail',
+  async (payload, thunkAPI) => {
+    try {
+      const response = await axios.get(`http://localhost:4000/products/${payload}`)
       return thunkAPI.fulfillWithValue(response.data)
     } catch (error) {
       return thunkAPI.rejectWithValue(error)
@@ -65,6 +87,20 @@ const productsSlice = createSlice({
       state.products = action.payload
     },
     [__getProducts.rejected]: (state, action) => {
+      state.isLoading = false
+      state.error = action.payload
+    },
+    // 게시물 디테일 조회 Reducer -------------------------------
+    [__getProductsDetail.pending]: (state, action) => {
+      state.isLoading = true
+      state.error = false
+    },
+    [__getProductsDetail.fulfilled]: (state, action) => {
+      state.isLoading = false
+      state.error = false
+      state.products = action.payload
+    },
+    [__getProductsDetail.rejected]: (state, action) => {
       state.isLoading = false
       state.error = action.payload
     },
