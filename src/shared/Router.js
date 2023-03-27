@@ -16,7 +16,7 @@ function Router() {
         <Route path="/register" element={<Register />} />
         <Route path="/product" element={<Product />} />
         <Route path="/post" element={<Post />} />
-        <Route path="/product/:id" element={<Detail />} />
+        <Route path="/products/:id" element={<Detail />} />
         <Route path="/*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
