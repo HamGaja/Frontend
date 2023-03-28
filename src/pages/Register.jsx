@@ -1,9 +1,12 @@
 import axios from 'axios';
 import React, { useState } from 'react'
-import apis from '../axios/api';
+import styled from 'styled-components';
+import GlobalStyle from '../components/GlobalStyle';
+import ModalTerms from '../components/Modal';
+import Modal from 'react-modal';
 
 function Register() {
-    
+    //  회원가입 State
     const [user, setUser] = useState({
         email: "",
         password: "",
@@ -12,80 +15,319 @@ function Register() {
         marketingTerm: true,
         gpsTerm : true
     });
+    //  비밀번호 확인 state
+    const [confirmPassword, setConfirmPassword] = useState("");
+    //  닉네임 중복체크 state
+    const [isDuplicate, setIsDuplicate] = useState(false);
     
+    //  ChangeInputHandler
     const changeInputHandler = (event) => {
         const { value, name } = event.target;
         setUser((pre) => {
             return {...pre, [name]: value} ;
         });
     };
-
+    //  password check handler
+    const changeConfirmPasswordInputHandler = (event) => {
+        setConfirmPassword(event.target.value);
+    }
+    //  회원가입 Button Handler (서버요청)
     const submitButtonHandler = (event) => {
         event.preventDefault();
+        if (user.password !== confirmPassword) {
+            alert("비밀번호와 비밀번호 확인이 다릅니다.");
+        }
+        // else if () {
+        //     alert('이 아이디는 중복된 아이디입니다.')
+        // }
+        else if (user.email === '') {
+            alert('아이디는 필수항목입니다.')
+        }
+        else if (user.username === ''){
+            alert('닉네임은 필수항목입니다.')
+        }
+        // else if (isDuplicate === false){
+        //     alert('닉네임 중복 확인을 하십시오.');
+        // }
+        
         // 서버에 보내기 (POST요청)
         axios.post("http://54.180.144.151/users/signup", user);
         console.log(user);
     };
-
+    //  닉네임 중복 확인 서버요청
+    const checkDuplicateButtonHandler = (event) => {
+        axios.post('http://54.180.144.151/users/check/username', user)
+        .then((res) => {
+            if (res.data.isDuplicate) {
+                console.log("res ->", res)
+                setIsDuplicate(true);
+                alert('중복된 닉네임입니다.');
+            }   else {
+                setIsDuplicate(false);
+                alert("사용 가능한 닉네임 입니다.")
+            }
+        })
+        .catch((err) => {
+            console.error(err);
+            alert('중복된 닉네임이 존재합니다.')
+        });
+    };
 
     return (
-    <>
-    <section>
-        <form onSubmit={submitButtonHandler}>
+    <StPageContainer>
+        <GlobalStyle/>
+        <ModalTerms/>
+    <StSection>
+        <StForm onSubmit={submitButtonHandler}>
+            <StLogoWrapper>
+                <StLogo>
+                함가자.
+                    <LogoLink href="https://www.goodchoice.kr/" />
+                </StLogo>
+            </StLogoWrapper>
             <div>
-                <h1>
-                    <a href="https://www.goodchoice.kr/">여기어때</a>
-                </h1>
-            </div>
-            <div>
-                <strong>회원가입</strong>
-
-                <br/>
-
-                <b>이메일 아이디</b>
-                <div>
-                    <input 
+                <StTitleWrapper>
+                회원가입
+                </StTitleWrapper>
+                
+                <StContentTitleWrapper>
+                    <StContentTitle>이메일 아이디</StContentTitle>
+                </StContentTitleWrapper>
+                
+                <StInputBoxWrapper>
+                    <StInputBox 
                     name="email"
                     type="email" 
                     placeholder="이메일 주소를 입력해주세요."
                     value={user.email}
                     onChange={changeInputHandler}
                     />
-                    <label>이메일 주소를 입력해주세요.</label>
-                </div>
+                    {/* <label>이메일 주소를 입력해주세요.</label> */}
+                </StInputBoxWrapper>
 
-                <b>비밀번호</b>
-                <div>
-                    <input 
-                    name="password"
-                    type="password" 
-                    placeholder="비밀번호를 입력해주세요."
-                    value={user.password}
-                    onChange={changeInputHandler} 
-                    />
-                    <label>비밀번호를 입력해주세요.</label>
-                </div>
-
-                <b>닉네임</b>
-                <div>
-                    <input 
-                    name="username"
-                    type="text"
-                    value={user.username}
-                    onChange={changeInputHandler} 
-                    />
-                    <label>추천 닉네임이에요!</label>
-                    <button type="button">딴거할래요</button>
-                </div>
+                <StContentTitleWrapper>
+                    <StContentTitle>비밀번호</StContentTitle>
+                </StContentTitleWrapper>
+                    <StInputBoxWrapper>
+                        <StInputBox 
+                        name="password"
+                        type="password" 
+                        placeholder="비밀번호를 입력해주세요."
+                        value={user.password}
+                        onChange={changeInputHandler} 
+                        />
+                        {/* <label>비밀번호를 입력해주세요.</label> */}
+                    </StInputBoxWrapper>
                 
-                <button>
+                <StContentTitleWrapper>
+                    <StContentTitle>비밀번호 확인</StContentTitle>
+                </StContentTitleWrapper>
+                    <StInputBoxWrapper>
+                        <StInputBox 
+                        name="confirmPassword"
+                        type="password"
+                        placeholder="비밀번호를 입력해주세요."
+                        value={confirmPassword}
+                        onChange={changeConfirmPasswordInputHandler} 
+                        />
+                        {/* <label>비밀번호를 입력해주세요.</label> */}
+                    </StInputBoxWrapper>
+
+                <StContentTitleWrapper>
+                    <StContentTitle>닉네임</StContentTitle>
+                </StContentTitleWrapper>
+                <StWrapper>
+                    <StUsernameInputBoxWrapper>
+                        <StUsernameInputBox 
+                        name="username"
+                        type="text"
+                        value={user.username}
+                        onChange={changeInputHandler} 
+                        />
+                        {/* <label>추천 닉네임이에요!</label> */}
+                    </StUsernameInputBoxWrapper>
+                    <StUsernameCheckButton 
+                    type="button"
+                    onClick={checkDuplicateButtonHandler}
+                    >
+                    중복검사
+                    </StUsernameCheckButton>
+                    {isDuplicate && (<span>중복된 아이디입니다.</span>)}
+                </StWrapper>
+
+                <StRegisterButton>
                     <span>가입하기</span>
-                </button>
+                </StRegisterButton>
             </div>
-        </form>
-    </section>
-    </>
+        </StForm>
+    </StSection>
+    </StPageContainer>
     )
 }
 
-export default Register
+export default Register;
+
+const StPageContainer = styled.div`
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+    background: #fff;
+    font-size: 18px;
+    line-height: 44px;
+    `
+const StSection = styled.section`
+    width: 336px;
+    height: 557px;
+    margin: 100px 346.5px 0 346.5px;
+    `;
+const StForm = styled.form`
+    /* width: 650px;
+    height: 336px; */
+`
+const StLogoWrapper = styled.strong`
+    width: 336px;
+    height: 44px;
+    `;
+const StLogo = styled.span`
+    font-family: 'yg-jalnan';
+    font-size: 27px;
+    font-weight: 700;
+    line-height: 44px;
+    color: #E44647;
+    `;
+const LogoLink = styled.a`
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    `;
+const StTitleWrapper = styled.strong`
+    width: 336px;
+    height: 26px;
+    margin: 30px 0 10px 0;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 26px;
+    text-decoration: none solid rgba(0,0,0,0.87);
+    `
+const StTitle = styled.strong`
+    
+    `
+const StContentTitleWrapper = styled.div`
+    display: flex;
+    text-align: left;
+    margin-bottom: 9px;
+`
+const StContentTitle = styled.b`
+    width: 336px;
+    height: 26px;
+    font-size: 16px;
+    font-weight: bold;
+    /* line-height: 22px */
+    color: rgba(0,0,0,0.56);
+    `
+const StInputBoxWrapper = styled.div`
+    width: 336px;
+    height: 48px;
+    border: 1px solid rgba(0,0,0,0.08);
+    border-radius: 6px;
+    font-size: 15px;
+    line-height: 22px;
+    margin-bottom: 38px;
+    padding: 0 10px ;
+`
+const StInputBox = styled.input`
+    width: 100%;
+    height: 30px;
+    border: none;
+    font-size: 18px;
+    margin-top: 8px;
+`
+const StUsernameInputBoxWrapper = styled.div`
+    width: 236px;
+    height: 48px;
+    border: 1px solid rgba(0,0,0,0.08);
+    border-radius: 6px;
+    font-size: 15px;
+    line-height: 22px;
+    margin-bottom: 38px;
+    /* padding: 0 10px; */
+`
+const StUsernameInputBox = styled.input`
+    width: 230px;
+    height: 30px;
+    border: none;
+    font-size: 18px;
+    margin-top: 8px;
+`
+const StUsernameCheckButton = styled.button`
+    width: 93px;
+    height: 48px;
+    /* font-weight: 700; */
+    border: none;
+    border-radius: 6px;
+    background: #ebebeb;
+    font-size: 14px;
+    font-weight: bold;
+    color: rgba(0,0,0,0.56);
+    cursor: pointer;
+`
+const StWrapper = styled.div`
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    justify-content: space-between;
+    width: 358px;
+`
+const StRegisterButton = styled.button`
+    background-color: rgb(250, 250, 250);
+    color: rgba(0, 0, 0, 0.16);
+    border: none;
+    margin-bottom: 50px;
+    width: 100%;
+    height: 56px;
+    font-size: 16px;
+    line-height: 56px;
+    margin-top: 16px;
+    border-radius: 6px;
+    font-size: 16px;
+    line-height: 56px;
+    color: rgba(16, 16, 16, 0.3);
+    text-align: center;
+    border: none;
+    cursor: pointer;
+`
+
+
+    // //  닉네임(username)중복확인 API (서버요청)
+    // const duplicationCheckAPI = async (username) => {
+    //     let returnValue;
+    //     await axios.post("http://54.180.144.151/users/check/username", {username: username })
+    //     .then((response)=> {returnValue = response.data})
+        
+    //     .catch(function(error) {
+    //         console.log(error);
+    //         returnValue = true;
+    //     });
+    //     return returnValue
+    // }
+    // //  닉네임(username)중복확인
+    // const duplicationCheck = () => {
+    //     duplicationCheckAPI(user.username)
+    //     .then((response) => {
+    //         // console.log("response -> ", response)
+    //         if(response === false) {
+    //             alert("사용 가능한 닉네임.");
+    //             setUsableName(response);
+    //         }
+    //         else {
+    //             alert("중복된 닉네임입니다.");
+    //             setUsableName(response);
+    //             setUser('');
+    //         }
+    //         // console.log("중복체크");
+    //     })
+    // }
