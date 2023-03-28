@@ -11,15 +11,15 @@ function Detail() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  const { products, isLoading, error } = useSelector((state) => state.products)
+  const { details, isLoading, error } = useSelector((state) => state.products)
   const param = params.id
-  console.log('products = ', products)
+  console.log('디테일입니다', details)
 
   useEffect(() => {
     dispatch(__getProductsDetail(+param))
   }, [])
 
-  if (!products || isLoading) {
+  if (!details || isLoading) {
     return <div>Loading...</div>
   }
 
@@ -33,10 +33,10 @@ function Detail() {
       <Top>
         <ProductImage src={'/images/home/hotel1.jpg'} />
         <ProductInfo>
-          <span>{products.star}</span>
-          <StName>{products.name}</StName>
+          <span>{details.star}</span>
+          <StName>{details.name}</StName>
           <p style={{ marginTop: '5px' }}>'score'자리 입니다.</p>
-          <p style={{ marginTop: '8px' }}>{products.address}</p>
+          <p style={{ marginTop: '8px' }}>{details.address}</p>
           <div>
             <StEventBox>
               <p>이벤트 1</p>
@@ -55,7 +55,7 @@ function Detail() {
                 <strong>사장님 한마디</strong>
                 <button>더보기</button>
               </div>
-              <StComment style={{ width: '376px ' }}>{products.ownerComment}</StComment>
+              <StComment style={{ width: '376px ' }}>{details.ownerComment}</StComment>
             </StOwnerCommentBox>
           </div>
         </ProductInfo>

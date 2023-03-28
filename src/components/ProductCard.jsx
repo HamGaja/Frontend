@@ -5,7 +5,7 @@ import styled from 'styled-components'
 function ProductCard({ image, name, description, price, rating, item }) {
   const navigate = useNavigate()
   return (
-    <Card key={item.id} onClick={() => navigate(`/products/${item.id}`)}>
+    <Card onClick={() => navigate(`/products/${item.id}`)}>
       <InfoWrapper>
         <div
           style={{

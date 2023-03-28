@@ -14,12 +14,36 @@ function Post() {
   const [products, setproducts] = useState({
     name: '',
     star: '',
-    score: '',
+    mainImage: null,
     address: '',
     description: '',
-    price: '',
     ownerComment: '',
+    // roomList: [
+    //   {
+    //     otherImage: '',
+    //     otherName: '',
+    //     otherPrice: '',
+    //   },
+    //   {
+    //     otherImage: '',
+    //     otherName: '',
+    //     otherPrice: '',
+    //   },
+    //   {
+    //     otherImage: '',
+    //     otherName: '',
+    //     otherPrice: '',
+    //   },
+    // ],
   })
+
+  const [otherRoom, setOtherRoom] = useState({
+    otherImage: '',
+    otherName: '',
+    otherPrice: '',
+  })
+
+  console.log('함보자', products.roomList)
 
   // input onChange
   const changeInputHandler = (e) => {
@@ -29,13 +53,32 @@ function Post() {
     })
   }
 
+  // file onChange
+  const fileChangeHandler = (e) => {
+    const { name } = e.target
+    setproducts((old) => {
+      const formData = new FormData()
+      formData.append(name, e.target.files[0])
+      return { ...old, [name]: formData }
+    })
+  }
+
   // product 추가 함수
   const productButtonClickHandler = (e) => {
     e.preventDefault()
-    dispatch(__addProducts({ products }))
+    const formData = new FormData()
+    formData.append('name', products.name)
+    formData.append('star', products.star)
+    formData.append('mainImage', products.mainImage)
+    formData.append('address', products.address)
+    formData.append('description', products.description)
+    formData.append('ownerComment', products.ownerComment)
+    // formData.append('roomList', products.roomList)
+
+    dispatch(__addProducts(formData))
       .then(() => {
         alert('작성완료')
-        navigate('/product')
+        // navigate('/product')
       })
       .catch((error) => {
         alert('실패')
@@ -55,7 +98,7 @@ function Post() {
     <div>
       <Header />
       <BorderArea>
-        <StForm onSubmit={productButtonClickHandler}>
+        <StForm name="productForm" onSubmit={productButtonClickHandler}>
           호텔명
           <input
             type="text"
@@ -87,9 +130,9 @@ function Post() {
             onChange={changeInputHandler}
             required
           />
-          {/* 메인 이미지 */}
-          {/* <input type="file" name="mainImage" /> */}
-          숙소정보
+          메인 이미지
+          <input type="file" name="mainImage" a onChange={fileChangeHandler} />
+          호텔소개
           <input
             type="text"
             name="description"
@@ -97,7 +140,7 @@ function Post() {
             onChange={changeInputHandler}
             required
           />
-          숙소정보
+          사장님한마디
           <input
             type="text"
             name="ownerComment"
@@ -105,6 +148,24 @@ function Post() {
             onChange={changeInputHandler}
             required
           />
+          {/* 추가객실
+          <input
+            type="text"
+            name="otherName"
+            value={products.roomList}
+            onChange={changeInputHandler}
+            required
+          />{' '}
+          추가객실가격
+          <input
+            type="text"
+            name="otherPrice"
+            value={products.ownerComment}
+            onChange={changeInputHandler}
+            required
+          />{' '}
+          추가객실 이미지
+          <input type="file" name="otherImage" onChange={fileChangeHandler} /> */}
           <Button type="submit">등록하기</Button>
         </StForm>
       </BorderArea>
