@@ -14,13 +14,16 @@ const GlobalStyle = createGlobalStyle`
     font-weight: normal;
     font-style: normal;
 }
+@font-face {
+    font-family: 'AppleSDGothicNeoT';
+    src: url('/assets/fonts/AppleSDGothicNeoT.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
 
     body {
-    font-family: 'Pretendard-Regular', sans-serif;
-    font-weight: 100;
+    font-family: 'AppleSDGothicNeoT', sans-serif;
     line-height: 1.5;
   }
-
-
 `
 export default GlobalStyle

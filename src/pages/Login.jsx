@@ -3,8 +3,11 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import apis from '../axios/api';
+import GlobalStyle from '../components/GlobalStyle';
 import { cookies } from '../shared/cookies';
-import '../assets/font/Jalnan.ttf'
+import { RiKakaoTalkFill, RiFacebookCircleFill } from "react-icons/ri";
+import { BsFacebook } from "react-icons/bs";
+import { SiNaver } from "react-icons/si";
 
 function Login() {
   const navi = useNavigate();
@@ -72,9 +75,10 @@ const submitButtonHandler = async (event) => {
 
   return (
   <StPageContainer>
+    <GlobalStyle/>
     <StSection>
         <form onSubmit={submitButtonHandler}>
-            <div>
+            <StLogoContainer>
                 <StLogoWrapper>
                   <StLogo>
                     함가자.
@@ -82,12 +86,12 @@ const submitButtonHandler = async (event) => {
                   {/* <LogoImage src="images/Login/ic_bi_yeogi_250px.png" alt="로고 이미지" /> */}
                     <LogoLink href="https://www.goodchoice.kr/" />
                 </StLogoWrapper>
-            </div>
+            </StLogoContainer>
 
             <StKaKaoLoginButton type="button">
               {/* <a href="https://accounts.kakao.com/login/?continue=https%3A%2F%2Fkauth.kakao.com%2Foauth%2Fauthorize%3Fproxy%3DeasyXDM_Kakao_ysiizqzj6h_provider%26ka%3Dsdk%252F1.43.1%2520os%252Fjavascript%2520sdk_type%252Fjavascript%2520lang%252Fko%2520device%252FMacIntel%2520origin%252Fhttps%25253A%25252F%25252Fwww.goodchoice.kr%26origin%3Dhttps%253A%252F%252Fwww.goodchoice.kr%26response_type%3Dcode%26redirect_uri%3Dkakaojs%26state%3Dqemiiti84mcikqunbzdata%26through_account%3Dtrue%26client_id%3Df6ffb505bb11d7cc3584d443ce35f704&talk_login=hidden#login"> */}
               <span>
-              카카오톡으로 로그인
+              <RiKakaoTalkFill/>&nbsp;카카오톡으로 로그인
               </span>
               {/* </a> */}
 
@@ -97,7 +101,7 @@ const submitButtonHandler = async (event) => {
 
             <StFaceBookLoginButton type="button">
               <span>
-                Facebook으로 로그인
+                <BsFacebook/>&nbsp;Facebook으로 로그인
               </span>
             </StFaceBookLoginButton>
 
@@ -105,7 +109,7 @@ const submitButtonHandler = async (event) => {
 
             <StNaverLoginButton href="https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=r3Mjf4OpPMMq8Lib0JKw&redirect_uri=https%3A%2F%2Fwww.goodchoice.kr%2Fuser%2FnaverLoginProcess&state=a27591363b21ea2fb56a59b71711600e">
               <span>
-                네이버로 로그인
+                <SiNaver/>&nbsp;네이버로 로그인
               </span>
             </StNaverLoginButton>
 
@@ -179,20 +183,24 @@ const StPageContainer = styled.div`
   background: #fff;
   font-size: 18px;
   line-height: 44px;
-
-`
+`;
 const StSection = styled.section`
   width: 336px;
   height: 557px;
   margin: 100px 346.5px 0 346.5px;
 `;
+const StLogoContainer = styled.div`
+  margin-bottom: 16px;
+`
 const StLogoWrapper = styled.strong`
   width: 336px;
   height: 56px;
-`
+`;
 const StLogo = styled.span`
   font-family: 'yg-jalnan';
-`
+  font-size: 24px;
+  color: rgb(255,0,85);
+`;
 const LogoImage = styled.img`
   width: 112px;
   height: 44px;
@@ -217,8 +225,8 @@ const StKaKaoLoginButton = styled.button`
     background: #FCE51E;
     color: rgb(59,29,20);
     font-weight: 550;
-    font-family: 'Pretendard', 'Apple SD Gothic Neo', '맑은 고딕', '맑은고딕', 'Malgun Gothic', sans-serif;
-    cursor: pointer;`
+    cursor: pointer;
+    `;
 const StFaceBookLoginButton = styled.button`
     width: 336px;
     height: 56px;
@@ -232,9 +240,8 @@ const StFaceBookLoginButton = styled.button`
     background: rgb(24,119,242);
     color: #fff;
     font-weight: 650;
-    font-family: 'Pretendard', 'Apple SD Gothic Neo', '맑은 고딕', '맑은고딕', 'Malgun Gothic', sans-serif;
     cursor: pointer;
-`
+`;
 const StNaverLoginButton = styled.button`
     width: 336px;
     height: 56px;
@@ -248,9 +255,8 @@ const StNaverLoginButton = styled.button`
     background: rgb(40,209,17);
     color: #fff;
     font-weight: 550;
-    font-family: 'Pretendard', 'Apple SD Gothic Neo', '맑은 고딕', '맑은고딕', 'Malgun Gothic', sans-serif;
     cursor: pointer;
-`
+`;
 const StSpace = styled.p`
     display: inline-block;
     top: 0;
@@ -264,23 +270,26 @@ const StSpace = styled.p`
     line-height: 40px;
     color: rgba(0,0,0,0.38);
     text-align: center;
-`
+`;
 const StInputBox = styled.input`
   width: 336px;
   height: 48px;
   border: 1px solid rgba(0,0,0,0.26);
   border-radius: 4px;
+  font-size: 18px;
   margin: 0 0 8px;
   padding: 0 16px 0 46px;
   box-sizing: border-box;
-`
+`;
 const StLoginButton = styled.button`
   width: 336px;
-  height: 48px;
+  height: 56px;
   margin-top: 16px;
   border-radius: 6px;
   font-size: 16px;
-  line-height: 56px;
+  line-height: 22px;
+  font-weight: 600;
+  text-decoration: none solid rgba(0, 0, 0, 0.87);
   color: #fff;
   text-align: center;
   border: none;
