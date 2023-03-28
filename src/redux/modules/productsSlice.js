@@ -1,19 +1,27 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
+import apis from '../../axios/api'
 
 const initialState = {
   products: [
     {
       name: '',
       star: '',
-      score: '',
+      mainImage: null,
       address: '',
       description: '',
-      price: '',
       ownerComment: '',
+      roomList: [
+        {
+          otherImage: '',
+          otherName: '',
+          otherPrice: '',
+        },
+      ],
     },
   ],
+  details: [],
   isLoading: false,
   error: null,
 }
@@ -23,10 +31,14 @@ const initialState = {
 export const __addProducts = createAsyncThunk(
   '__addProducts',
   async (payload, thunkAPI) => {
-    console.log('서버에보내는 값', payload.products)
+    console.log('페이로드', payload)
     try {
-      await axios.post(`http://localhost:4000/products`, payload.products)
-      return thunkAPI.fulfillWithValue(payload.products)
+      await axios.post('http://localhost:4000/products', payload, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
+      return thunkAPI.fulfillWithValue(payload)
     } catch (error) {
       return thunkAPI.rejectWithValue(error)
     }
@@ -98,7 +110,7 @@ const productsSlice = createSlice({
     [__getProductsDetail.fulfilled]: (state, action) => {
       state.isLoading = false
       state.error = false
-      state.products = action.payload
+      state.details = action.payload
     },
     [__getProductsDetail.rejected]: (state, action) => {
       state.isLoading = false
