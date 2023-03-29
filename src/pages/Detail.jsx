@@ -12,6 +12,13 @@ function Detail() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
+     // 기본적으로 room 탭이 선택되도록 함
+    const [activeTab, setActiveTab] = useState('room'); 
+     // 각 탭이 클릭될 때 실행되는 함수
+    const handleTabClick = (tabName) => {
+      setActiveTab(tabName);
+    };
+
   const { details, isLoading, error } = useSelector((state) => state.products)
   const param = params.id
   console.log('디테일입니다', details)
@@ -62,16 +69,30 @@ function Detail() {
         </ProductInfo>
       </Top>
       <StTap name="tap">
-        <StTapRoomInfBookButton>
+        <StTapRoomInfBookButton className={activeTab === 'room' ? 'active' : ''} onClick={() => handleTabClick('room')}>
           객실안내/예약
         </StTapRoomInfBookButton>
-        <StTapRoomInfoButton onClick={()=>{setCurrentTap(1)}}>
+        <StTapRoomInfoButton className={activeTab === 'info' ? 'active' : ''} onClick={() => handleTabClick('info')}>
           숙소정보
         </StTapRoomInfoButton>
-        <StTapReviewButton onClick={()=>{setCurrentTap(2)}}>
+        <StTapReviewButton className={activeTab === 'review' ? 'active' : ''} onClick={() => handleTabClick('review')}>
           리뷰
         </StTapReviewButton>
+        <div className="tab-content">
+        {/* activeTab의 값에 따라 각 탭의 내용을 표시 */}
+        {activeTab === 'room' && <RoomTypeBooking />}
+        {activeTab === 'info' && <AccommodationInfo />}
+        {activeTab === 'review' && <Reviews />}
+      </div>
       </StTap>
+    </Wrapper>
+  )
+  }
+
+  function RoomTypeBooking() {
+  return (
+    
+    <Wrapper>
       <Reservation name="reservation">
         <div
           style={{
@@ -200,6 +221,23 @@ function Detail() {
     </Wrapper>
   )
 }
+  function AccommodationInfo() {
+    return (
+      <div className="accommodation-info">
+        {/* 숙소정보 탭의 내용 */}
+        숙소정보
+      </div>
+    );
+  }
+
+  function Reviews() {
+    return (
+      <div className="reviews">
+        {/* 리뷰 탭의 내용 */}
+        리뷰
+      </div>
+    );
+  }
 
 export default Detail
 
