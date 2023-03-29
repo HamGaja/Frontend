@@ -11,12 +11,13 @@ function Product() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const { products, isLoading, error } = useSelector((state) => state.products)
-  const productList = JSON.stringify(products)
-  console.log('jsx입니다.', products)
+  // const productList = JSON.stringify(products)
+  console.log('받아온 데이터', products)
 
   useEffect(() => {
+    console.log('유즈이펙트 일함?')
     dispatch(__getProducts())
-  }, [productList])
+  }, [])
 
   if (!products || isLoading) {
     return <div>Loading...</div>
