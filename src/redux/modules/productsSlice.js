@@ -46,10 +46,8 @@ export const __addProducts = createAsyncThunk(
 export const __getProducts = createAsyncThunk(
   '__getProducts',
   async (payload, thunkAPI) => {
-    console.log('겟 일함?')
     try {
       const response = await axios.get(`http://54.180.144.151/products`)
-      console.log('리스폰스', response.data.data)
       return thunkAPI.fulfillWithValue(response.data.data)
     } catch (error) {
       return thunkAPI.rejectWithValue(error)
