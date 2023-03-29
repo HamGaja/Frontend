@@ -34,9 +34,11 @@ function Register() {
     //  회원가입 Button Handler (서버요청)
     const submitButtonHandler = (event) => {
         event.preventDefault();
+        console.log("isdu->", isDuplicate)
         if (user.password !== confirmPassword) {
             alert("비밀번호와 비밀번호 확인이 다릅니다.");
         }
+        //서버에서 400에러로 아이디 중복에러 보내주면 어떻게 보여줄 수 있을지.
         // else if () {
         //     alert('이 아이디는 중복된 아이디입니다.')
         // }
@@ -46,9 +48,10 @@ function Register() {
         else if (user.username === ''){
             alert('닉네임은 필수항목입니다.')
         }
-        // else if (isDuplicate === false){
-        //     alert('닉네임 중복 확인을 하십시오.');
-        // }
+        //왜 오류가 나는지
+        else if (isDuplicate === true){
+            alert('닉네임 중복 확인을 하십시오.');
+        }
         
         // 서버에 보내기 (POST요청)
         axios.post("http://54.180.144.151/users/signup", user);
