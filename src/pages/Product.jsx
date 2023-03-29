@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Header from '../components/Header'
 import styled from 'styled-components'
 import Wrapper from '../components/Wrapper'
@@ -6,18 +6,21 @@ import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { __getProducts } from '../redux/modules/productsSlice'
 import ProductCard from '../components/ProductCard'
+import GlobalStyle from '../components/GlobalStyle'
+import Footer from '../components/Footer'
+import 'react-calendar/dist/Calendar.css'
 
 function Product() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const { products, isLoading, error } = useSelector((state) => state.products)
-  // const productList = JSON.stringify(products)
+  const productList = JSON.stringify(products)
+  const [value, onChange] = useState(new Date())
   console.log('받아온 데이터', products)
 
   useEffect(() => {
-    console.log('유즈이펙트 일함?')
     dispatch(__getProducts())
-  }, [])
+  }, [productList])
 
   if (!products || isLoading) {
     return <div>Loading...</div>
@@ -29,6 +32,7 @@ function Product() {
 
   return (
     <div>
+      <GlobalStyle />
       <Wrapper>
         <Header />
         <div
@@ -37,12 +41,14 @@ function Product() {
             height: '211px',
             border: '1px solid black',
             boxSizing: 'border-box',
+            backgroundColor: '#f7323f',
           }}
         >
           상단 영역입니다. Product
         </div>
         <MainBoard>
           <div
+            name="filer"
             style={{
               width: '296px',
               height: '1824px',
@@ -52,7 +58,20 @@ function Product() {
               boxSizing: 'border-box',
             }}
           >
-            필터 영역입니다.
+            <Wrapper>
+              <DateBox>
+                <h3>날짜</h3>
+                <img
+                  style={{
+                    width: '250px',
+                    objectFit: 'contain',
+                    margin: '5px 15px 0 0',
+                  }}
+                  src="images/product/calendar.jpg"
+                />
+                <hr style={{ bordercolor: '#F5F5F5' }} />
+              </DateBox>
+            </Wrapper>
           </div>
           <div
             style={{
@@ -84,6 +103,7 @@ function Product() {
           </div>
         </MainBoard>
       </Wrapper>
+      <Footer />
     </div>
   )
 }
@@ -118,4 +138,14 @@ const Card = styled.div`
   background-size: cover;
   box-sizing: border-box;
   border: 1px solid black;
+`
+
+const DateBox = styled.div`
+  width: 250px;
+  height: 300px;
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 10px;
+
+  padding: 10px;
 `
