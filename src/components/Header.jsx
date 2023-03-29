@@ -2,20 +2,49 @@ import React from 'react'
 import styled from 'styled-components'
 import GlobalStyle from './GlobalStyle'
 import { FaSistrix } from 'react-icons/fa'
+import { useNavigate } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { cookies } from '../shared/cookies'
 
 function Header() {
+  const navigate = useNavigate()
+  const [openSearch, setOpenSearch] = useState(false) // 검색창 on/off
+  const [isScroll, setIsScroll] = useState(false) //스크롤 on/off
+  const token = cookies.get('token')
+
+  useEffect(() => {
+    window.addEventListener('scroll', () => {
+      window.scrollY > 0 ? setIsScroll(true) : setIsScroll(false)
+    })
+  }, [isScroll])
+
+  //검색창 on/off 토글 함수
+  const openSearchHandler = () => {
+    setOpenSearch((prev) => !prev) //이전 값과 반대로 바꿔준다
+  }
+
+  const logOutHandler = () => {
+    cookies.remove('token')
+    alert('로그아웃 되었습니다.')
+    navigate('/')
+  }
+
   return (
-    <StHeader>
+    <StHeader isScroll={isScroll}>
       <GlobalStyle />
       <Section>
-        <StHamGaja>함가자.</StHamGaja>
+        <StHamGaja onClick={() => navigate('/')}>함가자.</StHamGaja>
         <SelectArea>
           <FaSistrix style={{ color: 'white', fontSize: '21px' }} />
           <StUl>
             <li>내주변</li>
             <li>예약내역</li>
             <li>더보기</li>
-            <li>로그인</li>
+            {token ? (
+              <li onClick={logOutHandler}>로그아웃</li>
+            ) : (
+              <li onClick={() => navigate('/login')}>로그인</li>
+            )}
           </StUl>
         </SelectArea>
       </Section>
@@ -68,9 +97,10 @@ const StUl = styled.ul`
   flex-direction: row;
   gap: 30px;
   color: white;
-  font-size: 21px;
+  font-size: 18px;
   font-weight: 200;
   margin-left: 20px;
+  cursor: pointer;
 `
 
 export default Header

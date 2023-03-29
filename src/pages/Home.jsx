@@ -11,7 +11,7 @@ function Home() {
     <main>
       <Wrapper>
         <Header />
-        <Home_Banner_img src={'images/home/home_banner 1.png'} />
+        <Home_Banner />
         <Main_link>
           <Home_Cate_ul>
             <li>
@@ -52,9 +52,33 @@ function Home() {
             </li>
           </Home_Cate_ul>
         </Main_link>
-        <Recommend>리코멘드 영역 입니다.</Recommend>
-        <Appdown>앱 다운 영역 입니다.</Appdown>
-        <Main_event>이벤트 표출 영역입니다.</Main_event>
+        <Recommend>
+          <p
+            style={{
+              fontSize: '24px',
+              marginBottom: '20px',
+              fontWeight: 'bold',
+            }}
+          >
+            여기어때 소식
+          </p>
+          <Wrapper>
+            <img src={`/images/home/recomend.jpg`} />
+          </Wrapper>
+        </Recommend>
+        <img src={`/images/home/appdown.jpg`} />
+        <Main_event>
+          <p
+            style={{
+              fontSize: '24px',
+              marginBottom: '20px',
+              fontWeight: 'bold',
+            }}
+          >
+            이벤트
+          </p>
+          <img style={{ width: '970px' }} src={`/images/home/event.jpg`} />
+        </Main_event>
         <Ad_ask>
           <Ask_Box src="/images/home/apply_add.png" />
           <Ask_Box onClick={() => navigate('/post')} src="/images/home/to post.png" />
@@ -67,13 +91,17 @@ function Home() {
 
 export default Home
 
-const Home_Banner_img = styled.img`
-  height: 580px;
+const Home_Banner = styled.div`
+  height: 450px;
   width: 100%;
 
-  margin-top: 100px;
-  object-fit: none;
+  margin-top: 110px;
   box-sizing: border-box;
+
+  background-image: url('images/home/home_banner 1.png');
+  background-repeat: no-repeat;
+  background-position: 50% 100%;
+  background-size: contain;
 `
 
 const Main_link = styled.div`
@@ -88,10 +116,10 @@ const Main_link = styled.div`
 `
 
 const Recommend = styled.div`
-  height: 315px;
-  width: 1024px;
-  border: 1px solid black;
-  box-sizing: border-box;
+  height: 280px;
+  width: 970px;
+
+  margin-top: 30px;
 `
 
 const Appdown = styled.div`
@@ -103,9 +131,9 @@ const Appdown = styled.div`
 
 const Main_event = styled.div`
   height: 251.391px;
-  width: 962px;
-  border: 1px solid black;
-  box-sizing: border-box;
+  width: 970px;
+
+  margin-top: 50px;
 `
 
 const Ad_ask = styled.div`
@@ -151,4 +179,5 @@ const Ask_Box = styled.img`
   height: 200px;
 
   box-sizing: border-box;
+  object-fit: 'cover';
 `

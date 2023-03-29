@@ -6,6 +6,7 @@ import NotFound from '../pages/NotFound'
 import Post from '../pages/Post'
 import Product from '../pages/Product'
 import Register from '../pages/Register'
+import RegisterBusiness from '../pages/RegisterBusiness'
 
 function Router() {
   return (
@@ -14,6 +15,7 @@ function Router() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/register/auth" element={<RegisterBusiness />} />
         <Route path="/product" element={<Product />} />
         <Route path="/post" element={<Post />} />
         <Route path="/products/:id" element={<Detail />} />
