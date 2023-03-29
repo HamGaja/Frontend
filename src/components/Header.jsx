@@ -2,20 +2,22 @@ import React from 'react'
 import styled from 'styled-components'
 import GlobalStyle from './GlobalStyle'
 import { FaSistrix } from 'react-icons/fa'
+import { useNavigate } from 'react-router-dom'
 
 function Header() {
+  const navigate = useNavigate()
   return (
     <StHeader>
       <GlobalStyle />
       <Section>
-        <StHamGaja>함가자.</StHamGaja>
+        <StHamGaja onClick={() => navigate('/')}>함가자.</StHamGaja>
         <SelectArea>
           <FaSistrix style={{ color: 'white', fontSize: '21px' }} />
           <StUl>
             <li>내주변</li>
             <li>예약내역</li>
             <li>더보기</li>
-            <li>로그인</li>
+            <li onClick={() => navigate('/login')}>로그인</li>
           </StUl>
         </SelectArea>
       </Section>

@@ -12,12 +12,11 @@ const initialState = {
       address: '',
       description: '',
       ownerComment: '',
+      fileType: 'Hotel',
       roomList: [
-        {
-          otherImage: '',
-          otherName: '',
-          otherPrice: '',
-        },
+        { roomName: ``, roomImage: null, roomPrice: `` },
+        { roomName: ``, roomImage: null, roomPrice: `` },
+        { roomName: ``, roomImage: null, roomPrice: `` },
       ],
     },
   ],
@@ -31,9 +30,8 @@ const initialState = {
 export const __addProducts = createAsyncThunk(
   '__addProducts',
   async (payload, thunkAPI) => {
-    console.log('페이로드', payload)
     try {
-      await axios.post('http://localhost:4000/products', payload, {
+      await apis.post('/products', payload, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -48,9 +46,11 @@ export const __addProducts = createAsyncThunk(
 export const __getProducts = createAsyncThunk(
   '__getProducts',
   async (payload, thunkAPI) => {
+    console.log('겟 일함?')
     try {
-      const response = await axios.get(`http://localhost:4000/products`)
-      return thunkAPI.fulfillWithValue(response.data)
+      const response = await axios.get(`http://54.180.144.151/products`)
+      console.log('리스폰스', response.data.data)
+      return thunkAPI.fulfillWithValue(response.data.data)
     } catch (error) {
       return thunkAPI.rejectWithValue(error)
     }
@@ -61,7 +61,7 @@ export const __getProductsDetail = createAsyncThunk(
   '__getProductsDetail',
   async (payload, thunkAPI) => {
     try {
-      const response = await axios.get(`http://localhost:4000/products/${payload}`)
+      const response = await axios.get(`http://54.180.144.151/products/${payload}`)
       return thunkAPI.fulfillWithValue(response.data)
     } catch (error) {
       return thunkAPI.rejectWithValue(error)

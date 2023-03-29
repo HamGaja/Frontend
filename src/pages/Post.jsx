@@ -5,66 +5,63 @@ import Button from '../components/Button'
 import { useDispatch } from 'react-redux'
 import { __addProducts } from '../redux/modules/productsSlice'
 import { useNavigate } from 'react-router-dom'
+import apis from '../axios/api'
 
 function Post() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
   // state
-  const [products, setproducts] = useState({
+  const [products, setProducts] = useState({
     name: '',
     star: '',
     mainImage: null,
     address: '',
     description: '',
     ownerComment: '',
-    // roomList: [
-    //   {
-    //     otherImage: '',
-    //     otherName: '',
-    //     otherPrice: '',
-    //   },
-    //   {
-    //     otherImage: '',
-    //     otherName: '',
-    //     otherPrice: '',
-    //   },
-    //   {
-    //     otherImage: '',
-    //     otherName: '',
-    //     otherPrice: '',
-    //   },
-    // ],
+    fileType: 'Hotel',
+    roomList: [
+      { roomName: ``, roomImage: null, roomPrice: `` },
+      { roomName: ``, roomImage: null, roomPrice: `` },
+      { roomName: ``, roomImage: null, roomPrice: `` },
+    ],
   })
-
-  const [otherRoom, setOtherRoom] = useState({
-    otherImage: '',
-    otherName: '',
-    otherPrice: '',
-  })
-
-  console.log('함보자', products.roomList)
 
   // input onChange
   const changeInputHandler = (e) => {
     const { value, name } = e.target
-    setproducts((old) => {
-      return { ...old, [name]: value }
-    })
+    if (name.startsWith('roomList')) {
+      const [, index, field] = name.match(/roomList\[(\d+)\]\.(.+)/)
+      setProducts((old) => {
+        const newRoomList = [...old.roomList]
+        newRoomList[index][field] = value
+        return { ...old, roomList: newRoomList }
+      })
+    } else if (name === 'roomImage') {
+      setProducts((old) => {
+        const newRoomList = [...old.roomList]
+        newRoomList[0].roomImage = e.target.files[0]
+        return { ...old, roomList: newRoomList }
+      })
+    } else {
+      setProducts((old) => {
+        return {
+          ...old,
+          [name]: value,
+        }
+      })
+    }
   }
 
   // file onChange
   const fileChangeHandler = (e) => {
-    const { name } = e.target
-    setproducts((old) => {
-      const formData = new FormData()
-      formData.append(name, e.target.files[0])
-      return { ...old, [name]: formData }
+    setProducts((old) => {
+      return { ...old, mainImage: e.target.files[0] }
     })
   }
 
   // product 추가 함수
-  const productButtonClickHandler = (e) => {
+  const productButtonClickHandler = async (e) => {
     e.preventDefault()
     const formData = new FormData()
     formData.append('name', products.name)
@@ -73,8 +70,27 @@ function Post() {
     formData.append('address', products.address)
     formData.append('description', products.description)
     formData.append('ownerComment', products.ownerComment)
-    // formData.append('roomList', products.roomList)
+    formData.append('fisleType', 'Hotel')
+    formData.append('roomList[0].roomName', products.roomList[0].roomName)
+    formData.append('roomList[0].roomImage', products.roomList[0].roomImage)
+    formData.append('roomList[0].roomPrice', products.roomList[0].roomPrice)
+    formData.append('roomList[1].roomName', products.roomList[1].roomName)
+    formData.append('roomList[1].roomImage', products.roomList[1].roomImage)
+    formData.append('roomList[1].roomPrice', products.roomList[1].roomPrice)
+    formData.append('roomList[2].roomName', products.roomList[2].roomName)
+    formData.append('roomList[2].roomImage', products.roomList[2].roomImage)
+    formData.append('roomList[2].roomPrice', products.roomList[2].roomPrice)
 
+    for (const [key, value] of formData.entries()) {
+      console.log(key, value)
+    }
+
+    const response = await apis.post('/products', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    })
+    console.log('리스폰스', response)
     dispatch(__addProducts(formData))
       .then(() => {
         alert('작성완료')
@@ -83,15 +99,15 @@ function Post() {
       .catch((error) => {
         alert('실패')
       })
-    setproducts({
-      name: '',
-      star: '',
-      score: '',
-      address: '',
-      description: '',
-      price: '',
-      ownerComment: '',
-    })
+    // setproducts({
+    //   name: '',
+    //   star: '',
+    //   score: '',
+    //   address: '',
+    //   description: '',
+    //   price: '',
+    //   ownerComment: '',
+    // })
   }
 
   return (
@@ -131,7 +147,12 @@ function Post() {
             required
           />
           메인 이미지
-          <input type="file" name="mainImage" a onChange={fileChangeHandler} />
+          <input
+            type="file"
+            name="mainImage"
+            accept="image/jpg,image/jpeg,image/png"
+            onChange={fileChangeHandler}
+          />
           호텔소개
           <input
             type="text"
@@ -148,24 +169,69 @@ function Post() {
             onChange={changeInputHandler}
             required
           />
-          {/* 추가객실
+          룸1 네임
           <input
             type="text"
-            name="otherName"
-            value={products.roomList}
+            name="roomList[0].roomName"
+            value={products.roomList[0].roomName}
             onChange={changeInputHandler}
-            required
-          />{' '}
-          추가객실가격
+          />
+          룸1 가격
           <input
             type="text"
-            name="otherPrice"
-            value={products.ownerComment}
+            name="roomList[0].roomPrice"
+            value={products.roomList[0].roomPrice}
             onChange={changeInputHandler}
-            required
-          />{' '}
-          추가객실 이미지
-          <input type="file" name="otherImage" onChange={fileChangeHandler} /> */}
+          />
+          룸1 이미지
+          <input
+            type="file"
+            name="roomList[0].roomImage"
+            accept="image/jpg,image/jpeg,image/png"
+            onChange={changeInputHandler}
+          />
+          룸2 네임
+          <input
+            type="text"
+            name="roomList[1].roomName"
+            value={products.roomList[1].roomName}
+            onChange={changeInputHandler}
+          />
+          룸2 가격
+          <input
+            type="text"
+            name="roomList[1].roomPrice"
+            value={products.roomList[1].roomPrice}
+            onChange={changeInputHandler}
+          />
+          룸2 이미지
+          <input
+            type="file"
+            name="roomList[1].roomImage"
+            accept="image/jpg,image/jpeg,image/png"
+            onChange={changeInputHandler}
+          />
+          룸3 네임
+          <input
+            type="text"
+            name="roomList[2].roomName"
+            value={products.roomList[2].roomName}
+            onChange={changeInputHandler}
+          />
+          룸3 가격
+          <input
+            type="text"
+            name="roomList[2].roomPrice"
+            value={products.roomList[2].roomPrice}
+            onChange={changeInputHandler}
+          />
+          룸3 이미지
+          <input
+            type="file"
+            name="roomList[2].roomImage"
+            accept="image/jpg,image/jpeg,image/png"
+            onChange={changeInputHandler}
+          />
           <Button type="submit">등록하기</Button>
         </StForm>
       </BorderArea>
