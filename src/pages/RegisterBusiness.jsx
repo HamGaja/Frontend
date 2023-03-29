@@ -7,7 +7,7 @@ import Modal from 'react-modal';
 import { useNavigate } from 'react-router-dom';
 import { IoAccessibilitySharp } from "react-icons/io5";
 
-function Register() {
+function RegisterBusiness() {
     const navi = useNavigate();
     //  회원가입 State
     const [user, setUser] = useState({
@@ -57,7 +57,7 @@ function Register() {
         }
         
         // 서버에 보내기 (POST요청)
-        axios.post("http://54.180.144.151/users/signup", user);
+        axios.post("http://54.180.144.151/users/signup/auth", user);
         console.log(user);
     };
     //  닉네임 중복 확인 서버요청
@@ -94,7 +94,7 @@ function Register() {
             </StLogoWrapper>
             <div>
                 <StTitleWrapper>
-                회원가입
+                회원가입(<IoAccessibilitySharp/>관리자)
                 </StTitleWrapper>
                 
                 <StContentTitleWrapper>
@@ -200,24 +200,18 @@ function Register() {
                         }}
                     display={user.username}>{user.username.length === 0 ? "닉네임을 입력해주십시오.": ""}
                     </div> */}
+
                 <StRegisterButton>
                     <span>가입하기</span>
                 </StRegisterButton>
             </div>
         </StForm>
-        <div style={{display: 'flex', alignItems: 'right', justifyContent: 'right'}}>
-            <StRegisterAuthButton
-            onClick={() => {navi("/register/auth");}}>
-            <IoAccessibilitySharp/>&nbsp;관리자회원가입
-            </StRegisterAuthButton>
-        </div>
-        
     </StSection>
     </StPageContainer>
     )
 }
 
-export default Register;
+export default RegisterBusiness;
 
 const StPageContainer = styled.div`
     display: flex;
@@ -336,23 +330,6 @@ const StWrapper = styled.div`
     justify-content: space-between;
     width: 358px;
 `
-const StRegisterAuthButton = styled.button`
-    background-color: rgb(250, 250, 250);
-    border: none;
-    /* margin-bottom: 50px; */
-    width: 40%;
-    height: 53px;
-    font-size: 16px;
-    line-height: 56px;
-    margin-top: 6px;
-    border-radius: 6px;
-    font-size: 16px;
-    line-height: 56px;
-    color: rgba(16, 16, 16, 0.3);
-    text-align: center;
-    border: none;
-    cursor: pointer;
-`
 const StRegisterButton = styled.button`
     background-color: rgb(250, 250, 250);
     color: rgba(0, 0, 0, 0.16);
@@ -362,7 +339,7 @@ const StRegisterButton = styled.button`
     height: 56px;
     font-size: 16px;
     line-height: 56px;
-    margin-top: 6px;
+    margin-top: 16px;
     border-radius: 6px;
     font-size: 16px;
     line-height: 56px;

@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import Header from '../components/Header'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
 import { __getProductsDetail } from '../redux/modules/productsSlice'
 import Wrapper from '../components/Wrapper'
+import ModalRoomInfo from '../components/ModalRoomInfo'
 
 function Detail() {
   const params = useParams()
@@ -61,15 +62,15 @@ function Detail() {
         </ProductInfo>
       </Top>
       <StTap name="tap">
-        <button style={{ width: '116px', height: '72px', margin: '0 24px 0 0' }}>
+        <StTapRoomInfBookButton>
           객실안내/예약
-        </button>
-        <button style={{ width: '72px', height: '72px', margin: '0 24px 0 0' }}>
+        </StTapRoomInfBookButton>
+        <StTapRoomInfoButton onClick={()=>{setCurrentTap(1)}}>
           숙소정보
-        </button>
-        <button style={{ width: '36px', height: '72px', margin: '0 24px 0 0' }}>
+        </StTapRoomInfoButton>
+        <StTapReviewButton onClick={()=>{setCurrentTap(2)}}>
           리뷰
-        </button>
+        </StTapReviewButton>
       </StTap>
       <Reservation name="reservation">
         <div
@@ -90,28 +91,75 @@ function Detail() {
             <p
               style={{
                 fontSize: '20px',
-                fontWeight: 'bold',
+                fontWeight: '700',
+                lineHeight: '20px',
+                textDecoration: 'none solid rgba(0,0,0,0.87)',
                 height: '37px',
               }}
             >
               객실명
             </p>
-            <div
-              style={{
-                height: '76px',
-                padding: '41px 0 0',
-                display: 'flex',
-                justifyContent: 'space-between',
-              }}
-            >
+            <StRoomInfoPricebox>
               <span>가격</span>
-              <span>97,750원</span>
-            </div>
-            <button style={{ width: '510px', margin: '12px 0' }}>객실 이용 안내</button>
-            <button style={{ width: '510px' }}>예약</button>
+              <span style={{fontSize: '20px'}}>97,750원</span>
+            </StRoomInfoPricebox>
+            <ModalRoomInfo 
+            // style={{ width: '510px', margin: '12px 0' }}
+            >객실 이용 안내</ModalRoomInfo>
+            <StBookingButton>예약</StBookingButton>
           </OtherRoomInfo>
         </OtherRoomCard>
         <OtherRoomCard name="otherRoom">
+          <OtherRoomImg src="/images/home/hotel1.jpg" />
+          <OtherRoomInfo name="info">
+            <p
+              style={{
+                fontSize: '20px',
+                fontWeight: '700',
+                lineHeight: '20px',
+                textDecoration: 'none solid rgba(0,0,0,0.87)',
+                height: '37px',
+              }}
+            >
+              객실명
+            </p>
+            <StRoomInfoPricebox>
+              <span>가격</span>
+              <span style={{fontSize: '20px'}}>97,750원</span>
+            </StRoomInfoPricebox>
+            <ModalRoomInfo 
+            // style={{ width: '510px', margin: '12px 0' }}
+            >객실 이용 안내</ModalRoomInfo>
+            <StBookingButton>예약</StBookingButton>
+          </OtherRoomInfo>
+        </OtherRoomCard>
+        <OtherRoomCard name="otherRoom">
+          <OtherRoomImg src="/images/home/hotel1.jpg" />
+          <OtherRoomInfo name="info">
+            <p
+              style={{
+                fontSize: '20px',
+                fontWeight: '700',
+                lineHeight: '20px',
+                textDecoration: 'none solid rgba(0,0,0,0.87)',
+                height: '37px',
+              }}
+            >
+              객실명
+            </p>
+            <StRoomInfoPricebox>
+              <span>가격</span>
+              <span style={{fontSize: '20px'}}>97,750원</span>
+            </StRoomInfoPricebox>
+            <ModalRoomInfo 
+            // style={{ width: '510px', margin: '12px 0' }}
+            >객실 이용 안내</ModalRoomInfo>
+            <StBookingButton>예약</StBookingButton>
+          </OtherRoomInfo>
+        </OtherRoomCard>
+
+
+        {/* <OtherRoomCard name="otherRoom">
           <OtherRoomImg src="/images/home/hotel1.jpg" />
           <OtherRoomInfo name="info">
             <p
@@ -137,34 +185,8 @@ function Detail() {
             <button style={{ width: '510px', margin: '12px 0' }}>객실 이용 안내</button>
             <button style={{ width: '510px' }}>예약</button>
           </OtherRoomInfo>
-        </OtherRoomCard>
-        <OtherRoomCard name="otherRoom">
-          <OtherRoomImg src="/images/home/hotel1.jpg" />
-          <OtherRoomInfo name="info">
-            <p
-              style={{
-                fontSize: '20px',
-                fontWeight: 'bold',
-                height: '37px',
-              }}
-            >
-              객실명
-            </p>
-            <div
-              style={{
-                height: '76px',
-                padding: '41px 0 0',
-                display: 'flex',
-                justifyContent: 'space-between',
-              }}
-            >
-              <span>가격</span>
-              <span>97,750원</span>
-            </div>
-            <button style={{ width: '510px', margin: '12px 0' }}>객실 이용 안내</button>
-            <button style={{ width: '510px' }}>예약</button>
-          </OtherRoomInfo>
-        </OtherRoomCard>
+        </OtherRoomCard> */}
+
 
         {/* <OtherRoomCard name="otherRoom">
           <OtherRoomImg src="/images/home/hotel1.jpg" />
@@ -249,11 +271,11 @@ const StComment = styled.div`
 
 const StTap = styled.div`
   width: 975px;
-  height: 75px;
+  height: 73px;
   margin: 39px 31px;
   padding: 0 16px;
 
-  border: 1px solid black;
+  border-bottom: 1px solid #B8BDD4;
   box-sizing: border-box;
 `
 
@@ -266,16 +288,17 @@ const Reservation = styled.div`
 const OtherRoomImg = styled.img`
   width: 376px;
   height: 226px;
-
-  border: 1px solid black;
+  border: none;
+  border-radius: 1px;
   box-sizing: border-box;
+  cursor: pointer;
 `
 
 const OtherRoomInfo = styled.div`
   width: 512px;
-  height: 226px;
+  height: 230px;
 
-  border: 1px solid black;
+  border: none;
   box-sizing: border-box;
 `
 
@@ -284,5 +307,96 @@ const OtherRoomCard = styled.div`
   padding: 24px;
   margin-bottom: 24px;
   gap: 30px;
-  border: 1px solid black;
+  border: 1.5px solid #F7F7F7;
+  border-radius: 4px;
+`
+
+const StTapRoomInfBookButton = styled.button`
+  width: 120px;
+  height: 72px;
+  margin: 0 24px 0 0;
+  border-top: none;
+  border-right: none;
+  border-left: none;
+  border-bottom: 2px solid #bdb7b7;
+  display: inline-block;
+  font-size: 18px;
+  font-weight: 700;
+  text-decoration: none solid rgb(0,0,0,0.38);
+  text-align: center;
+  background-color: #FFFFFF;
+  cursor: pointer;
+  :active{
+    width: 120px;
+    text-decoration: none solid rgb(230,28,81);
+    color: #E61C51;
+    border-bottom: 3px solid #F2114C;
+  }
+`
+const StTapRoomInfoButton = styled.button`
+  width: 75px;
+  height: 72px;
+  margin: 0 24px 0 0;
+  border-top: none;
+  border-right: none;
+  border-left: none;
+  border-bottom: 2px solid #bdb7b7;
+  display: inline-block;
+  font-size: 18px;
+  font-weight: 700;
+  text-decoration: none solid rgb(0,0,0,0.38);
+  text-align: center;
+  background-color: #FFFFFF;
+  cursor: pointer;
+  :active{
+    width: 75px;
+    text-decoration: none solid rgb(230,28,81);
+    color: #E61C51;
+    border-bottom: 3px solid #F2114C;
+  }
+`
+const StTapReviewButton = styled.button`
+  width: 44px;
+  height: 72px;
+  margin: 0 24px 0 0;
+  border-top: none;
+  border-right: none;
+  border-left: none;
+  border-bottom: 2px solid #bdb7b7;
+  display: inline-block;
+  font-size: 18px;
+  font-weight: 700;
+  text-decoration: none solid rgb(0,0,0,0.38);
+  text-align: center;
+  background-color: #FFFFFF;
+  cursor: pointer;
+  :active{
+    width: 44px;
+    text-decoration: none solid rgb(230,28,81);
+    color: #E61C51;
+    border-bottom: 3px solid #F2114C;
+  }
+`
+const StBookingButton = styled.button`
+  width: 512px;
+  height: 40px;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  text-decoration: none solid rgb(255,255,255);
+  text-align: center;
+  color: white;
+  background-color: #ED1C48;
+  cursor: pointer;
+`
+const StRoomInfoPricebox = styled.div`
+  height: 36px;
+  padding: 41px 0 0;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #F7F7F7;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 16px;
+  text-decoration: none solid rgba(0,0,0, 0.87);
 `
