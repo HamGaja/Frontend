@@ -4,8 +4,13 @@ import styled from 'styled-components'
 
 function ProductCard({ image, name, description, price, rating, item }) {
   const navigate = useNavigate()
+  console.log(item.imageUrl)
   return (
-    <Card onClick={() => navigate(`/products/${item.id}`)}>
+    <Card
+      key={item.id}
+      imageUrl={item.imageUrl}
+      onClick={() => navigate(`/products/${item.id}`)}
+    >
       <InfoWrapper>
         <div
           style={{
@@ -31,9 +36,10 @@ const Card = styled.div`
 
   margin-right: 20px;
 
-  background-image: url('/images/home/hotel1.jpg');
+  background-image: url(${(props) => props.imageUrl});
   background-position: center;
   background-size: cover;
+  background-color: #eee;
   color: white;
 `
 
