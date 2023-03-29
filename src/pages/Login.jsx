@@ -80,8 +80,9 @@ const submitButtonHandler = async (event) => {
         <form onSubmit={submitButtonHandler}>
             <StLogoContainer>
                 <StLogoWrapper>
-                  <StLogo>
-                    함가자.
+                  <StLogo
+                  onClick={() => {navi("/")}}>
+                  함가자.
                   </StLogo>
                   {/* <LogoImage src="images/Login/ic_bi_yeogi_250px.png" alt="로고 이미지" /> */}
                     <LogoLink href="https://www.goodchoice.kr/" />
@@ -200,6 +201,7 @@ const StLogo = styled.span`
   font-family: 'yg-jalnan';
   font-size: 24px;
   color: rgb(255,0,85);
+  cursor: pointer;
 `;
 const LogoImage = styled.img`
   width: 112px;

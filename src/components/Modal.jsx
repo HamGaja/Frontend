@@ -21,12 +21,43 @@ function ModalTerms() {
     const [isChecked3, setIsChecked3] = useState(false);
     const [isChecked4, setIsChecked4] = useState(false);
     const [isChecked5, setIsChecked5] = useState(false);
+    const [isChecked6, setIsChecked6] = useState(false);
     
     const allCheckHandler = (e) => {
         const isChecked = e.target.checked;
-        
-    }
+        setIsCheckedAll(isChecked);
+        setIsChecked1(isChecked);
+        setIsChecked2(isChecked);
+        setIsChecked3(isChecked);
+        setIsChecked4(isChecked);
+        setIsChecked5(isChecked);
+        setIsChecked6(isChecked);
+    };
     console.log(allCheckHandler)
+
+    const checkHandler1 = (e) => {
+        setIsChecked1(e.target.checked);
+    };
+    
+    const checkHandler2 = (e) => {
+        setIsChecked2(e.target.checked);
+    };
+    
+    const checkHandler3 = (e) => {
+        setIsChecked3(e.target.checked);
+    };
+    
+    const checkHandler4 = (e) => {
+        setIsChecked4(e.target.checked);
+    };
+    
+    const checkHandler5 = (e) => {
+        setIsChecked5(e.target.checked);
+    };
+
+    const checkHandler6 = (e) => {
+        setIsChecked6(e.target.checked);
+    };
 
 
     return (
@@ -41,39 +72,39 @@ function ModalTerms() {
         <section>
             <strong>여기어때 약관 동의</strong>
             <div>
-                <p>
-                <input type="checkbox" id="allTerms" value="전체 동의" />
+                <p style={{fontWeight : '900'}}>
+                <input type="checkbox" id="checkAll" checked={isCheckedAll} onChange={allCheckHandler} />
                 전체동의
                 </p>
                 
                 <p htmlFor="termsConditionsForUse">
-                    <input type="checkbox" id="termsConditionsForUse" value="이용약관 동의(필수)" />
-                    이용약관 동의(필수)
+                    <input type="checkbox" id="termsConditionsForUse" checked={isChecked1} onChange={checkHandler1} required/>
+                    <a href="https://www.goodchoice.kr/more/terms/terms">이용약관 동의</a><span style={{color : 'red'}}>&nbsp;(필수)</span>
                 </p>
 
                 <p htmlFor="termsAge">
-                    <input type="checkbox" id="termsAge" value="만 14세 이상 확인(필수)" />
-                    만 14세 이상 확인(필수)
+                    <input type="checkbox" id="termsAge" checked={isChecked2} onChange={checkHandler2} required/>
+                    <a href="https://www.goodchoice.kr/more/over14yearsOldAgree">만 14세 이상 확인</a><span style={{color : 'red'}}>&nbsp;(필수)</span>
                 </p>
                 
                 <p htmlFor="termsPersonalRequired">
-                    <input type="checkbox" id="termsPersonalRequired" value="개인정보 수집 및 이용 동의(필수)" />
-                    개인정보 수집 및 이용 동의(필수)
+                    <input type="checkbox" id="termsPersonalRequired" checked={isChecked3} onChange={checkHandler3} required/>
+                    <a href="https://www.goodchoice.kr/more/privacyRequire">개인정보 수집 및 이용 동의</a><span style={{color : 'red'}}>&nbsp;(필수)</span>
                 </p>
                 
                 <p htmlFor="termsPersonalSelective">
-                    <input type="checkbox" id="termsPersonalSelective" value="개인정보 수집 및 이용 동의(선택)" />
-                    개인정보 수집 및 이용 동의(선택)
+                    <input type="checkbox" id="termsPersonalSelective" value={isChecked4} checked={isChecked4} onChange={checkHandler4} />
+                    <a href="https://www.goodchoice.kr/more/privacySelect">개인정보 수집 및 이용 동의</a>&nbsp;(선택)
                 </p>
                 
                 <p htmlFor="termsMarketingAlert">
-                    <input type="checkbox" id="termsMarketingAlert" value="마케팅 알림 수신동의(선택)" />
-                    마케팅 알림 수신동의(선택)
+                    <input type="checkbox" id="termsMarketingAlert" checked={isChecked5} onChange={checkHandler5} />
+                    <a href="http://api3.goodchoice.kr/more/marketingAgree">마케팅 알림 수신동의</a>&nbsp;(선택)
                 </p>
                 
                 <p htmlFor="termsLocationBased">
-                    <input type="checkbox" id="termsLocationBased" value="위치기반 서비스 이용약관 동의(선택)" />
-                    위치기반 서비스 이용약관 동의(선택)
+                    <input type="checkbox" id="termsLocationBased" checked={isChecked6} onChange={checkHandler6} />
+                    <a href="https://www.goodchoice.kr/more/terms/location">위치기반 서비스 이용약관 동의</a>&nbsp;(선택)
                 </p>
                 
                 <button onClick={closeModal}>다음</button>
@@ -145,7 +176,7 @@ const StModal = styled(Modal)`
         height: 26px;
         margin-bottom: 25px;
         font-size: 15px;
-        font-weight: 700;
+        font-weight: 500;
         line-height: 26px;
     }
     & button {
@@ -159,8 +190,13 @@ const StModal = styled(Modal)`
         border: none;
         border-radius: 6px;
         background-color: #EFEFEF4D;
-        color: #000000;
+        color: #c5c0c0;
         cursor: pointer;
+    }
+    & a {
+        text-decoration: underline;
+        :link  { color: #000000; text-decoration: underline;}
+        :visited { color: black; text-decoration: none;}
     }
 `;
 
