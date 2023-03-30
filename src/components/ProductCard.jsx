@@ -4,7 +4,6 @@ import styled from 'styled-components'
 
 function ProductCard({ image, name, description, price, rating, item }) {
   const navigate = useNavigate()
-  console.log(item.imageUrl)
   return (
     <Card
       key={item.id}
@@ -12,15 +11,9 @@ function ProductCard({ image, name, description, price, rating, item }) {
       onClick={() => navigate(`/products/${item.id}`)}
     >
       <InfoWrapper>
-        <div
-          style={{
-            width: '630px',
-            height: '180px',
-          }}
-        ></div>
-        {item.star}
-        <Name>{item.name}</Name>
-        {item.address}
+        <p style={{ marginTop: '155px' }}>{item.star}</p>
+        <p style={{ fontSize: '26px', fontWeight: '700' }}>{item.name}</p>
+        <p style={{ fontSize: '20px', fontWeight: '400' }}>{item.address}</p>
       </InfoWrapper>
     </Card>
   )
@@ -37,19 +30,13 @@ const Card = styled.div`
   margin-right: 20px;
 
   background-image: url(${(props) => props.imageUrl});
+  background-color: rgba(0, 0, 0, 0.8);
   background-position: center;
   background-size: cover;
-  background-color: #eee;
   color: white;
 `
 
 const InfoWrapper = styled.div`
   padding: 16px;
   flex: 1;
-`
-
-const Name = styled.div`
-  font-size: 20px;
-  font-weight: bold;
-  margin-bottom: 8px;
 `

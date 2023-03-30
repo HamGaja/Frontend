@@ -55,10 +55,22 @@ function Register() {
         else if (isDuplicate === true){
             alert('닉네임 중복 확인을 하십시오.');
         }
-        
-        // 서버에 보내기 (POST요청)
-        axios.post("http://54.180.144.151/users/signup", user);
-        console.log(user);
+        else {
+                    // 서버에 보내기 (POST요청)
+            axios.post("http://54.180.144.151/users/signup/user", user)
+                .then(() =>{ 
+                alert('회원 가입이 완료되었습니다.')
+                navi('/login')
+            })
+            .catch((error) => {
+                if (error.response.status === 400 && error.response.data.message === 'DUPLICATE_EMAIL') {
+                    alert('입력하신 이메일은 중복된 이메일 입니다.')
+                }   else {
+                    // alert('서버 오류가 발생했습니다.')
+                    alert('입력하신 이메일은 중복된 이메일 입니다.')
+                } 
+            });
+        }    
     };
     //  닉네임 중복 확인 서버요청
     const checkDuplicateButtonHandler = (event) => {

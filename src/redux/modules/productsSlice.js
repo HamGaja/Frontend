@@ -54,12 +54,15 @@ export const __getProducts = createAsyncThunk(
     }
   }
 )
+//http://54.180.144.151/products/${payload}
 // 게시물 디테일 조회 함수
 export const __getProductsDetail = createAsyncThunk(
   '__getProductsDetail',
   async (payload, thunkAPI) => {
     try {
       const response = await axios.get(`http://54.180.144.151/products/${payload}`)
+      console.log(payload)
+      console.log(response, '리스폰스 입니다.')
       return thunkAPI.fulfillWithValue(response.data)
     } catch (error) {
       return thunkAPI.rejectWithValue(error)

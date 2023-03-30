@@ -5,9 +5,10 @@ import styled from 'styled-components';
 import apis from '../axios/api';
 import GlobalStyle from '../components/GlobalStyle';
 import { cookies } from '../shared/cookies';
-import { RiKakaoTalkFill, RiFacebookCircleFill } from "react-icons/ri";
+import { RiKakaoTalkFill } from "react-icons/ri";
 import { BsFacebook } from "react-icons/bs";
 import { SiNaver } from "react-icons/si";
+import { IoMail } from "react-icons/io5";
 
 function Login() {
   const navi = useNavigate();
@@ -45,7 +46,8 @@ const submitButtonHandler = async (event) => {
     console.log(result.headers.authorization)
     navi("/");
 }   catch (e) {
-    alert("로그인 실패")
+    alert("이메일 또는 비밀번호를 확인해주세요.")
+    
 }
 };
   //    쿠키가 있는지 확인, 쿠키가 있으면 home으로 보내기(가드)
@@ -121,20 +123,33 @@ const submitButtonHandler = async (event) => {
             </StSpace>
 
             <div>
+                
                 <StInputBox 
                 name="email"
                 type="email" 
-                placeholder="이메일 주소" 
+                placeholder= "이메일 주소" 
                 required
                 data-msg-required="이메일 주소를 입력해 주세요."
                 aria-invalid="true" 
                 value={user.email}
                 onChange={changeInputHandler}
                 />
+                <span 
+                  style={{
+                    display : 'flex',
+                    position :'relative',
+                    color : 'rgb(255,0,85)',
+                    fontSize : '14px',
+                    marginLeft : '6px',
+                  }}
+                  display={user.email}>{user.email.length === 0 ? "이메일을 입력해주세요." : ""}
+                </span>
+                
                 {/* <label>이메일 주소를 입력해 주세요.</label> */}
             </div>
 
             <div>
+
                 <StInputBox 
                 name="password"
                 type="password" 
@@ -145,6 +160,16 @@ const submitButtonHandler = async (event) => {
                 value={user.password}
                 onChange={changeInputHandler} 
                 />
+                <span 
+                  style={{
+                  display : 'flex',
+                  position :'relative',
+                  color : 'rgb(255,0,85)',
+                  fontSize : '14px',
+                  marginLeft : '6px',
+                  }}
+                  display={user.password}>{user.password.length === 0 ? "비밀번호를 입력해주세요.": ""}
+                </span>
                 {/* <label>비밀번호를 입력해 주세요.</label> */}
             </div>
 
@@ -264,7 +289,7 @@ const StSpace = styled.p`
     top: 0;
     left: 50%;
     z-index: 10;
-    width: 50px;
+    width: 336px;
     height: 40px;
     margin: 0 0 0 -25px;
     background: #fff;
@@ -272,6 +297,8 @@ const StSpace = styled.p`
     line-height: 40px;
     color: rgba(0,0,0,0.38);
     text-align: center;
+    /* text-decoration: line-through;  */
+
 `;
 const StInputBox = styled.input`
   width: 336px;
@@ -280,8 +307,12 @@ const StInputBox = styled.input`
   border-radius: 4px;
   font-size: 18px;
   margin: 0 0 8px;
-  padding: 0 16px 0 46px;
+  padding: 0 16px 0 16px;
   box-sizing: border-box;
+  :focus{
+    border: 1px solid rgb(0, 0, 0);
+
+  }
 `;
 const StLoginButton = styled.button`
   width: 336px;

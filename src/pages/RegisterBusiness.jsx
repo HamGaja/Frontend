@@ -49,16 +49,28 @@ function RegisterBusiness() {
             alert('아이디는 필수항목입니다.')
         }
         else if (user.username === ''){
-            alert('닉네임은 필수항목입니다.')
+            alert('사업자번호는 필수항목입니다.')
         }
         //왜 오류가 나는지
         else if (isDuplicate === true){
-            alert('닉네임 중복 확인을 하십시오.');
+            alert('사업자번호 중복 확인을 하십시오.');
         }
-        
-        // 서버에 보내기 (POST요청)
-        axios.post("http://54.180.144.151/users/signup/auth", user);
-        console.log(user);
+        else {
+                    // 서버에 보내기 (POST요청)
+            axios.post("http://54.180.144.151/users/signup/auth", user)
+                .then(() =>{ 
+                alert('회원 가입이 완료되었습니다.')
+                navi('/login')
+            })
+            .catch((error) => {
+                if (error.response.status === 400 && error.response.data.message === 'DUPLICATE_EMAIL') {
+                    alert('입력하신 이메일은 중복된 이메일 입니다.')
+                }   else {
+                    // alert('서버 오류가 발생했습니다.')
+                    alert('입력하신 이메일은 중복된 이메일 입니다.')
+                } 
+            });
+        }    
     };
     //  닉네임 중복 확인 서버요청
     const checkDuplicateButtonHandler = (event) => {
@@ -67,15 +79,15 @@ function RegisterBusiness() {
             if (res.data.isDuplicate) {
                 console.log("res ->", res)
                 setIsDuplicate(true);
-                alert('중복된 닉네임입니다.');
+                alert('중복된 사업자번호입니다.');
             }   else {
                 setIsDuplicate(false);
-                alert("사용 가능한 닉네임 입니다.")
+                alert("유효한 사업자 번호입니다.")
             }
         })
         .catch((err) => {
             console.error(err);
-            alert('중복된 닉네임이 존재합니다.')
+            alert('중복된 사업자번호가 존재합니다.')
         });
     };
 
@@ -173,7 +185,7 @@ function RegisterBusiness() {
                     </StInputBoxWrapper>
 
                 <StContentTitleWrapper>
-                    <StContentTitle>닉네임</StContentTitle>
+                    <StContentTitle>사업자번호</StContentTitle>
                 </StContentTitleWrapper>
                 <StWrapper>
                     <StUsernameInputBoxWrapper>
