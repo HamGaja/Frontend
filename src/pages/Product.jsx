@@ -9,6 +9,7 @@ import ProductCard from '../components/ProductCard'
 import GlobalStyle from '../components/GlobalStyle'
 import Footer from '../components/Footer'
 import 'react-calendar/dist/Calendar.css'
+import { Checkbox, CheckboxLabel } from './Post'
 
 function Product() {
   const navigate = useNavigate()
@@ -17,6 +18,29 @@ function Product() {
   const productList = JSON.stringify(products)
   const [value, onChange] = useState(new Date())
   console.log('받아온 데이터', products)
+
+  // const [cateList, setCateList] = useState({
+  //   spa: false,
+  //   miniBar: false,
+  //   wifi: false,
+  //   bathItem: false,
+  //   tv: false,
+  //   airConditioner: false,
+  //   refrigerator: false,
+  //   showerRoom: false,
+  //   tub: false,
+  //   dryer: false,
+  //   iron: false,
+  //   electricRiceCooker: false,
+  // })
+  const onCheckHandler = (e) => {
+    const { name } = e.target
+    // setCateList({ ...cateList, [name]: (pre) => !pre })
+  }
+
+  // const checkedCateList = cateList.map((item) => (item ? item : null))
+
+  // const includeCateList = products?.map((item) => (item ? item : null))
 
   useEffect(() => {
     dispatch(__getProducts())
@@ -30,6 +54,17 @@ function Product() {
     return <div>{error.message}</div>
   }
 
+  // // 양선생님
+  // const category = (cate) => {
+  //   products.map((item) => {
+  //     const cateList = item.category.map((item) => (item == cate ? item : null))
+  //     if (item.includes(cateList)) {
+  //       return item
+  //     }
+  //   })
+  // }
+  // {spa? category(spa):null}
+
   return (
     <div>
       <GlobalStyle />
@@ -39,20 +74,43 @@ function Product() {
           style={{
             width: '100%',
             height: '211px',
-            border: '1px solid black',
             boxSizing: 'border-box',
             backgroundColor: '#f7323f',
           }}
         >
-          상단 영역입니다. Product
+          <p
+            style={{
+              margin: '100px 0 0 480px',
+              fontSize: '38px',
+              fontWeight: '400',
+              color: 'white',
+            }}
+          >
+            호텔·리조트
+          </p>
+          <select
+            style={{
+              margin: '10px 0 0 480px',
+              fontSize: '18px',
+              fontWeight: '400',
+              color: 'white',
+              border: 'none',
+              backgroundColor: '#ED303D',
+              color: 'white',
+              width: '300px',
+              height: '30px',
+            }}
+          >
+            <option value="1">서울 : 강남/역삼/삼성/신사/청담</option>
+          </select>
         </div>
         <MainBoard>
           <div
             name="filer"
             style={{
               width: '296px',
-              height: '1824px',
-              border: '1px solid black',
+              height: '400px',
+              border: '1px solid #DBDBDB',
               borderRadius: '4px',
               margin: '0 32px 0 32px',
               boxSizing: 'border-box',
@@ -71,6 +129,69 @@ function Product() {
                 />
                 <hr style={{ bordercolor: '#F5F5F5' }} />
               </DateBox>
+              <CategoryBox>객실 내 시설</CategoryBox>
+              <CheckboxList>
+                <CheckboxLabel>
+                  <Checkbox type="checkbox" name="spa" onChange={onCheckHandler} />
+                  스파
+                </CheckboxLabel>
+                <CheckboxLabel>
+                  <Checkbox type="checkbox" name="miniBar" onChange={onCheckHandler} />
+                  미니바
+                </CheckboxLabel>
+                <CheckboxLabel>
+                  <Checkbox type="checkbox" name="wifi" onChange={onCheckHandler} />
+                  와이파이
+                </CheckboxLabel>
+                <CheckboxLabel>
+                  <Checkbox type="checkbox" name="bathItem" onChange={onCheckHandler} />
+                  욕실물품
+                </CheckboxLabel>
+                <CheckboxLabel>
+                  <Checkbox type="checkbox" name="tv" onChange={onCheckHandler} />
+                  티비
+                </CheckboxLabel>
+                <CheckboxLabel>
+                  <Checkbox
+                    type="checkbox"
+                    name="airConditioner"
+                    onChange={onCheckHandler}
+                  />
+                  에어컨
+                </CheckboxLabel>
+                <CheckboxLabel>
+                  <Checkbox
+                    type="checkbox"
+                    name="refrigerator"
+                    onChange={onCheckHandler}
+                  />
+                  냉장고
+                </CheckboxLabel>
+                <CheckboxLabel>
+                  <Checkbox type="checkbox" name="showerRoom" onChange={onCheckHandler} />
+                  객실샤워실
+                </CheckboxLabel>
+                <CheckboxLabel>
+                  <Checkbox type="checkbox" name="tub" onChange={onCheckHandler} />
+                  욕조
+                </CheckboxLabel>
+                <CheckboxLabel>
+                  <Checkbox type="checkbox" name="dryer" onChange={onCheckHandler} />
+                  드라이기
+                </CheckboxLabel>
+                <CheckboxLabel>
+                  <Checkbox type="checkbox" name="iron" onChange={onCheckHandler} />
+                  다리미
+                </CheckboxLabel>
+                <CheckboxLabel>
+                  <Checkbox
+                    type="checkbox"
+                    name="electricRiceCooker"
+                    onChange={onCheckHandler}
+                  />
+                  전기밥솥
+                </CheckboxLabel>
+              </CheckboxList>
             </Wrapper>
           </div>
           <div
@@ -80,25 +201,22 @@ function Product() {
               marginRight: '32px',
             }}
           >
-            <StBtn>추천순</StBtn>
-            <StBtn>거리 순</StBtn>
-            <StBtn>낮은 가격 순</StBtn>
-            <StBtn>높은 가격 순</StBtn>
-            <StBtn
-              style={{
-                width: '80px',
-                margin: '0 0 20px 12px',
-                paddingRight: '12px',
-                boxSizing: 'border-box',
-              }}
-            >
-              지도
-            </StBtn>
-            <p>인기추천</p>
+            <img style={{ width: '630px' }} src="images/product/topbtn.png" />
+
+            <p style={{ fontWeight: 'bold', color: '#606060', fontSize: '18px' }}>
+              인기추천
+            </p>
             <div style={{ marginTop: '10px' }}>
               {products.map((item) => {
                 return <ProductCard key={item.id} item={item} />
               })}
+              {/* {checkedCateList
+                ? products.map((item) =>
+                    includeCateList.includes(checkedCateList) ? (
+                      <ProductCard key={item.id} item={item} />
+                    ) : null
+                  )
+                : null} */}
             </div>
           </div>
         </MainBoard>
@@ -142,10 +260,28 @@ const Card = styled.div`
 
 const DateBox = styled.div`
   width: 250px;
-  height: 300px;
+  height: 100px;
   font-size: 18px;
   font-weight: bold;
   margin-top: 10px;
 
   padding: 10px;
+`
+
+const CategoryBox = styled.div`
+  width: 250px;
+  max-height: none;
+  font-size: 15px;
+  color: #827f7f;
+  font-weight: bold;
+
+  padding: 10px;
+`
+const CheckboxList = styled.div`
+  width: 250px;
+  height: 100px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
 `
