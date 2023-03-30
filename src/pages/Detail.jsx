@@ -6,6 +6,7 @@ import styled from 'styled-components'
 import { __getProductsDetail } from '../redux/modules/productsSlice'
 import Wrapper from '../components/Wrapper'
 import ModalRoomInfo from '../components/ModalRoomInfo'
+import Calendar from '../components/Calendar'
 
 function Detail() {
   const params = useParams()
@@ -19,7 +20,7 @@ function Detail() {
       setActiveTab(tabName);
     };
 
-  const { details, isLoading, error } = useSelector((state) => state.products)
+  const { details, isLoading, error} = useSelector((state) => state.products)
   const param = params.id
   console.log('디테일입니다', details)
 
@@ -39,16 +40,26 @@ function Detail() {
     <Wrapper>
       <Header />
       <Top>
-        <ProductImage src={'/images/home/hotel1.jpg'} />
+        <ProductImage 
+        // src={'/images/home/hotel1.jpg'} 
+        >
+        {/* {details.data.imageUrl} */}
+        </ProductImage>
         <ProductInfo>
-          <span>{details.star}</span>
-          <StName>{details.name}</StName>
-          <p style={{ marginTop: '5px' }}>'score'자리 입니다.</p>
-          <p style={{ marginTop: '8px' }}>{details.address}</p>
+          <span>{details.data.star}</span>
+          <StName>{details.data.name}</StName>
+          <p style={{ marginTop: '5px' }}>
+            <div>
+            {details.data.star}{details.data.name}
+            </div>
+            <div>
+              {details.data.address}
+            </div>
+          </p>
+          <p style={{ marginTop: '8px' }}></p>
           <div>
             <StEventBox>
-              <p>이벤트 1</p>
-              <p>이벤트 2</p>
+              <StEventImg src={'/images/product/event.png'}/>
             </StEventBox>
             <StOwnerCommentBox>
               <div
@@ -61,9 +72,10 @@ function Detail() {
                 }}
               >
                 <strong>사장님 한마디</strong>
-                <button>더보기</button>
+                <StOwnerCommentBoxButton>더보기</StOwnerCommentBoxButton>
+                {/* <div>{details.data.ownerComment}</div> */}
               </div>
-              <StComment style={{ width: '376px ' }}>{details.ownerComment}</StComment>
+              <StComment style={{ width: '376px ' }}>{details.data.ownerComment}</StComment>
             </StOwnerCommentBox>
           </div>
         </ProductInfo>
@@ -75,14 +87,14 @@ function Detail() {
         <StTapRoomInfoButton className={activeTab === 'info' ? 'active' : ''} onClick={() => handleTabClick('info')}>
           숙소정보
         </StTapRoomInfoButton>
-        <StTapReviewButton className={activeTab === 'review' ? 'active' : ''} onClick={() => handleTabClick('review')}>
+        {/* <StTapReviewButton className={activeTab === 'review' ? 'active' : ''} onClick={() => handleTabClick('review')}>
           리뷰
-        </StTapReviewButton>
+        </StTapReviewButton> */}
         <div className="tab-content">
         {/* activeTab의 값에 따라 각 탭의 내용을 표시 */}
         {activeTab === 'room' && <RoomTypeBooking />}
         {activeTab === 'info' && <AccommodationInfo />}
-        {activeTab === 'review' && <Reviews />}
+        {/* {activeTab === 'review' && <Reviews />} */}
       </div>
       </StTap>
     </Wrapper>
@@ -90,6 +102,15 @@ function Detail() {
   }
 
   function RoomTypeBooking() {
+  // const params = useParams()
+  // const dispatch = useDispatch()
+  const { details } = useSelector((state) => state.products)
+  // const param = params.id
+  // console.log('디테일입니다', details)
+
+  // useEffect(() => {
+  //   dispatch(__getProductsDetail(+param))
+  // }, [])
   return (
     
     <Wrapper>
@@ -100,13 +121,49 @@ function Detail() {
             height: '40px',
             margin: '32px 0',
             boxSizing: 'border-box',
-            border: '1px solid red',
+            // border: '1px solid red',
           }}
           name="date"
         >
-          달력 위치 입니다.
+          <div>아래를 클릭해서 날짜를 선택하세요.</div>
+          <Calendar/>
         </div>
         <OtherRoomCard name="otherRoom">
+          <OtherRoomImg 
+          // src="/images/home/hotel1.jpg"
+          // {details.data.roomList[0].roomImage}
+          ></OtherRoomImg>
+          <OtherRoomInfo name="info">
+            <p
+              style={{
+                fontSize: '20px',
+                fontWeight: '700',
+                lineHeight: '20px',
+                textDecoration: 'none solid rgba(0,0,0,0.87)',
+                height: '37px',
+              }}
+            >
+              객실명
+              {details.data.roomList[0].roomName}
+            </p>
+            <StRoomInfoPricebox>
+              <span>가격</span>
+              <span style={{fontSize: '20px'}}>
+              {details.data.roomList[0].roomPrice}
+              </span>
+            </StRoomInfoPricebox>
+            <ModalRoomInfo 
+            // style={{ width: '510px', margin: '12px 0' }}
+            >객실 이용 안내</ModalRoomInfo>
+            <StBookingButton>예약</StBookingButton>
+          </OtherRoomInfo>
+        </OtherRoomCard>
+        </Reservation>
+    </Wrapper>
+  )
+}
+
+        {/* <OtherRoomCard name="otherRoom">
           <OtherRoomImg src="/images/home/hotel1.jpg" />
           <OtherRoomInfo name="info">
             <p
@@ -153,31 +210,12 @@ function Detail() {
             >객실 이용 안내</ModalRoomInfo>
             <StBookingButton>예약</StBookingButton>
           </OtherRoomInfo>
-        </OtherRoomCard>
-        <OtherRoomCard name="otherRoom">
-          <OtherRoomImg src="/images/home/hotel1.jpg" />
-          <OtherRoomInfo name="info">
-            <p
-              style={{
-                fontSize: '20px',
-                fontWeight: '700',
-                lineHeight: '20px',
-                textDecoration: 'none solid rgba(0,0,0,0.87)',
-                height: '37px',
-              }}
-            >
-              객실명
-            </p>
-            <StRoomInfoPricebox>
-              <span>가격</span>
-              <span style={{fontSize: '20px'}}>97,750원</span>
-            </StRoomInfoPricebox>
-            <ModalRoomInfo 
-            // style={{ width: '510px', margin: '12px 0' }}
-            >객실 이용 안내</ModalRoomInfo>
-            <StBookingButton>예약</StBookingButton>
-          </OtherRoomInfo>
-        </OtherRoomCard>
+        </OtherRoomCard> */}
+
+
+
+
+
 
 
         {/* <OtherRoomCard name="otherRoom">
@@ -217,10 +255,7 @@ function Detail() {
           <OtherRoomImg src="/images/home/hotel1.jpg" />
           <OtherRoomInfo name="info"></OtherRoomInfo>
         </OtherRoomCard> */}
-      </Reservation>
-    </Wrapper>
-  )
-}
+
   function AccommodationInfo() {
     return (
       <div className="accommodation-info">
@@ -272,12 +307,20 @@ const StName = styled.span`
 const StEventBox = styled.div`
   width: 420px;
   height: 70px;
-
   margin-top: 10px;
   border-radius: 10px;
-  background-color: #10aea5;
+  /* background-color: #10aea5; */
+  background-color: transparent;
   box-sizing: border-box;
-  padding: 12px 44px 12px 12px;
+  /* padding: 12px 44px 12px 12px; */
+`
+const StEventImg = styled.img`
+  width: 22vw;
+  height: 7vh;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  box-sizing: border-box;
+  /* padding: 12px 44px 12px 12px; */
 `
 
 const StOwnerCommentBox = styled.div`
@@ -295,9 +338,17 @@ const StOwnerCommentBox = styled.div`
   box-sizing: border-box;
   background-color: #fafafa;
 
-  & > button {
+  /* & > button {
     align-self: flex-end;
-  }
+  } */
+`
+const StOwnerCommentBoxButton = styled.button`
+  background-color: transparent;
+  color: #10aea5;
+  font-weight: 700;
+  margin-left: 230px;
+  border: none;
+  cursor: pointer;
 `
 
 const StComment = styled.div`
@@ -350,7 +401,7 @@ const OtherRoomCard = styled.div`
 `
 
 const StTapRoomInfBookButton = styled.button`
-  width: 120px;
+  width: 15%;
   height: 72px;
   margin: 0 24px 0 0;
   border-top: none;
@@ -358,21 +409,24 @@ const StTapRoomInfBookButton = styled.button`
   border-left: none;
   border-bottom: 2px solid #bdb7b7;
   display: inline-block;
-  font-size: 18px;
+  font-size: 17px;
   font-weight: 700;
   text-decoration: none solid rgb(0,0,0,0.38);
   text-align: center;
   background-color: #FFFFFF;
   cursor: pointer;
   :active{
-    width: 120px;
+
+  }
+  :focus{
+    width: 15%;
     text-decoration: none solid rgb(230,28,81);
     color: #E61C51;
     border-bottom: 3px solid #F2114C;
   }
 `
 const StTapRoomInfoButton = styled.button`
-  width: 75px;
+  width: 11%;
   height: 72px;
   margin: 0 24px 0 0;
   border-top: none;
@@ -380,14 +434,14 @@ const StTapRoomInfoButton = styled.button`
   border-left: none;
   border-bottom: 2px solid #bdb7b7;
   display: inline-block;
-  font-size: 18px;
+  font-size: 17px;
   font-weight: 700;
   text-decoration: none solid rgb(0,0,0,0.38);
   text-align: center;
   background-color: #FFFFFF;
   cursor: pointer;
-  :active{
-    width: 75px;
+  :focus{
+    width: 11%;
     text-decoration: none solid rgb(230,28,81);
     color: #E61C51;
     border-bottom: 3px solid #F2114C;
