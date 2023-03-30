@@ -13,20 +13,23 @@ function Detail() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-     // 기본적으로 room 탭이 선택되도록 함
-    const [activeTab, setActiveTab] = useState('room'); 
-     // 각 탭이 클릭될 때 실행되는 함수
-    const handleTabClick = (tabName) => {
-      setActiveTab(tabName);
-    };
+  // 기본적으로 room 탭이 선택되도록 함
+  const [activeTab, setActiveTab] = useState('room')
+  // 각 탭이 클릭될 때 실행되는 함수
+  const handleTabClick = (tabName) => {
+    setActiveTab(tabName)
+  }
 
-  const { details, isLoading, error} = useSelector((state) => state.products)
+  const { details, isLoading, error } = useSelector((state) => state.products)
   const param = params.id
+
+  console.log('파람', param)
   console.log('디테일입니다', details)
 
   useEffect(() => {
     dispatch(__getProductsDetail(+param))
-  }, [])
+    console.log('유즈 이펙트 뭐함')
+  }, [param])
 
   if (!details || isLoading) {
     return <div>Loading...</div>
@@ -40,26 +43,25 @@ function Detail() {
     <Wrapper>
       <Header />
       <Top>
-        <ProductImage 
-        // src={'/images/home/hotel1.jpg'} 
+        <ProductImage
+        // src={'/images/home/hotel1.jpg'}
         >
-        {/* {details.data.imageUrl} */}
+          {/* {details.data.imageUrl} */}
         </ProductImage>
         <ProductInfo>
-          <span>{details.data.star}</span>
-          <StName>{details.data.name}</StName>
+          {/* <span>{details.data.star}</span> */}
+          <StName>{details?.data.name}</StName>
           <p style={{ marginTop: '5px' }}>
             <div>
-            {details.data.star}{details.data.name}
+              {details?.data.star}
+              {details?.data.name}
             </div>
-            <div>
-              {details.data.address}
-            </div>
+            <div>{details?.data.address}</div>
           </p>
           <p style={{ marginTop: '8px' }}></p>
           <div>
             <StEventBox>
-              <StEventImg src={'/images/product/event.png'}/>
+              <StEventImg src={'/images/product/event.png'} />
             </StEventBox>
             <StOwnerCommentBox>
               <div
@@ -75,33 +77,41 @@ function Detail() {
                 <StOwnerCommentBoxButton>더보기</StOwnerCommentBoxButton>
                 {/* <div>{details.data.ownerComment}</div> */}
               </div>
-              <StComment style={{ width: '376px ' }}>{details.data.ownerComment}</StComment>
+              <StComment style={{ width: '376px ' }}>
+                {details?.data.ownerComment}
+              </StComment>
             </StOwnerCommentBox>
           </div>
         </ProductInfo>
       </Top>
       <StTap name="tap">
-        <StTapRoomInfBookButton className={activeTab === 'room' ? 'active' : ''} onClick={() => handleTabClick('room')}>
+        <StTapRoomInfBookButton
+          className={activeTab === 'room' ? 'active' : ''}
+          onClick={() => handleTabClick('room')}
+        >
           객실안내/예약
         </StTapRoomInfBookButton>
-        <StTapRoomInfoButton className={activeTab === 'info' ? 'active' : ''} onClick={() => handleTabClick('info')}>
+        <StTapRoomInfoButton
+          className={activeTab === 'info' ? 'active' : ''}
+          onClick={() => handleTabClick('info')}
+        >
           숙소정보
         </StTapRoomInfoButton>
         {/* <StTapReviewButton className={activeTab === 'review' ? 'active' : ''} onClick={() => handleTabClick('review')}>
           리뷰
         </StTapReviewButton> */}
         <div className="tab-content">
-        {/* activeTab의 값에 따라 각 탭의 내용을 표시 */}
-        {activeTab === 'room' && <RoomTypeBooking />}
-        {activeTab === 'info' && <AccommodationInfo />}
-        {/* {activeTab === 'review' && <Reviews />} */}
-      </div>
+          {/* activeTab의 값에 따라 각 탭의 내용을 표시 */}
+          {activeTab === 'room' && <RoomTypeBooking />}
+          {activeTab === 'info' && <AccommodationInfo />}
+          {/* {activeTab === 'review' && <Reviews />} */}
+        </div>
       </StTap>
     </Wrapper>
   )
-  }
+}
 
-  function RoomTypeBooking() {
+function RoomTypeBooking() {
   // const params = useParams()
   // const dispatch = useDispatch()
   const { details } = useSelector((state) => state.products)
@@ -112,7 +122,6 @@ function Detail() {
   //   dispatch(__getProductsDetail(+param))
   // }, [])
   return (
-    
     <Wrapper>
       <Reservation name="reservation">
         <div
@@ -126,10 +135,10 @@ function Detail() {
           name="date"
         >
           <div>아래를 클릭해서 날짜를 선택하세요.</div>
-          <Calendar/>
+          <Calendar />
         </div>
         <OtherRoomCard name="otherRoom">
-          <OtherRoomImg 
+          <OtherRoomImg
           // src="/images/home/hotel1.jpg"
           // {details.data.roomList[0].roomImage}
           ></OtherRoomImg>
@@ -144,26 +153,29 @@ function Detail() {
               }}
             >
               객실명
-              {details.data.roomList[0].roomName}
+              {details?.data.roomList[0].roomName}
             </p>
             <StRoomInfoPricebox>
               <span>가격</span>
-              <span style={{fontSize: '20px'}}>
-              {details.data.roomList[0].roomPrice}
+              <span style={{ fontSize: '20px' }}>
+                {details?.data.roomList[0].roomPrice}
               </span>
             </StRoomInfoPricebox>
-            <ModalRoomInfo 
+            <ModalRoomInfo
             // style={{ width: '510px', margin: '12px 0' }}
-            >객실 이용 안내</ModalRoomInfo>
+            >
+              객실 이용 안내
+            </ModalRoomInfo>
             <StBookingButton>예약</StBookingButton>
           </OtherRoomInfo>
         </OtherRoomCard>
-        </Reservation>
+      </Reservation>
     </Wrapper>
   )
 }
 
-        {/* <OtherRoomCard name="otherRoom">
+{
+  /* <OtherRoomCard name="otherRoom">
           <OtherRoomImg src="/images/home/hotel1.jpg" />
           <OtherRoomInfo name="info">
             <p
@@ -210,15 +222,11 @@ function Detail() {
             >객실 이용 안내</ModalRoomInfo>
             <StBookingButton>예약</StBookingButton>
           </OtherRoomInfo>
-        </OtherRoomCard> */}
+        </OtherRoomCard> */
+}
 
-
-
-
-
-
-
-        {/* <OtherRoomCard name="otherRoom">
+{
+  /* <OtherRoomCard name="otherRoom">
           <OtherRoomImg src="/images/home/hotel1.jpg" />
           <OtherRoomInfo name="info">
             <p
@@ -244,35 +252,37 @@ function Detail() {
             <button style={{ width: '510px', margin: '12px 0' }}>객실 이용 안내</button>
             <button style={{ width: '510px' }}>예약</button>
           </OtherRoomInfo>
-        </OtherRoomCard> */}
+        </OtherRoomCard> */
+}
 
-
-        {/* <OtherRoomCard name="otherRoom">
+{
+  /* <OtherRoomCard name="otherRoom">
           <OtherRoomImg src="/images/home/hotel1.jpg" />
           <OtherRoomInfo name="info"></OtherRoomInfo>
         </OtherRoomCard>
         <OtherRoomCard name="otherRoom">
           <OtherRoomImg src="/images/home/hotel1.jpg" />
           <OtherRoomInfo name="info"></OtherRoomInfo>
-        </OtherRoomCard> */}
+        </OtherRoomCard> */
+}
 
-  function AccommodationInfo() {
-    return (
-      <div className="accommodation-info">
-        {/* 숙소정보 탭의 내용 */}
-        숙소정보
-      </div>
-    );
-  }
+function AccommodationInfo() {
+  return (
+    <div className="accommodation-info">
+      {/* 숙소정보 탭의 내용 */}
+      숙소정보
+    </div>
+  )
+}
 
-  function Reviews() {
-    return (
-      <div className="reviews">
-        {/* 리뷰 탭의 내용 */}
-        리뷰
-      </div>
-    );
-  }
+function Reviews() {
+  return (
+    <div className="reviews">
+      {/* 리뷰 탭의 내용 */}
+      리뷰
+    </div>
+  )
+}
 
 export default Detail
 
@@ -364,7 +374,7 @@ const StTap = styled.div`
   margin: 39px 31px;
   padding: 0 16px;
 
-  border-bottom: 1px solid #B8BDD4;
+  border-bottom: 1px solid #b8bdd4;
   box-sizing: border-box;
 `
 
@@ -396,7 +406,7 @@ const OtherRoomCard = styled.div`
   padding: 24px;
   margin-bottom: 24px;
   gap: 30px;
-  border: 1.5px solid #F7F7F7;
+  border: 1.5px solid #f7f7f7;
   border-radius: 4px;
 `
 
@@ -411,18 +421,17 @@ const StTapRoomInfBookButton = styled.button`
   display: inline-block;
   font-size: 17px;
   font-weight: 700;
-  text-decoration: none solid rgb(0,0,0,0.38);
+  text-decoration: none solid rgb(0, 0, 0, 0.38);
   text-align: center;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   cursor: pointer;
-  :active{
-
+  :active {
   }
-  :focus{
+  :focus {
     width: 15%;
-    text-decoration: none solid rgb(230,28,81);
-    color: #E61C51;
-    border-bottom: 3px solid #F2114C;
+    text-decoration: none solid rgb(230, 28, 81);
+    color: #e61c51;
+    border-bottom: 3px solid #f2114c;
   }
 `
 const StTapRoomInfoButton = styled.button`
@@ -436,15 +445,15 @@ const StTapRoomInfoButton = styled.button`
   display: inline-block;
   font-size: 17px;
   font-weight: 700;
-  text-decoration: none solid rgb(0,0,0,0.38);
+  text-decoration: none solid rgb(0, 0, 0, 0.38);
   text-align: center;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   cursor: pointer;
-  :focus{
+  :focus {
     width: 11%;
-    text-decoration: none solid rgb(230,28,81);
-    color: #E61C51;
-    border-bottom: 3px solid #F2114C;
+    text-decoration: none solid rgb(230, 28, 81);
+    color: #e61c51;
+    border-bottom: 3px solid #f2114c;
   }
 `
 const StTapReviewButton = styled.button`
@@ -458,15 +467,15 @@ const StTapReviewButton = styled.button`
   display: inline-block;
   font-size: 18px;
   font-weight: 700;
-  text-decoration: none solid rgb(0,0,0,0.38);
+  text-decoration: none solid rgb(0, 0, 0, 0.38);
   text-align: center;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   cursor: pointer;
-  :active{
+  :active {
     width: 44px;
-    text-decoration: none solid rgb(230,28,81);
-    color: #E61C51;
-    border-bottom: 3px solid #F2114C;
+    text-decoration: none solid rgb(230, 28, 81);
+    color: #e61c51;
+    border-bottom: 3px solid #f2114c;
   }
 `
 const StBookingButton = styled.button`
@@ -475,10 +484,10 @@ const StBookingButton = styled.button`
   font-size: 16px;
   border: none;
   border-radius: 4px;
-  text-decoration: none solid rgb(255,255,255);
+  text-decoration: none solid rgb(255, 255, 255);
   text-align: center;
   color: white;
-  background-color: #ED1C48;
+  background-color: #ed1c48;
   cursor: pointer;
 `
 const StRoomInfoPricebox = styled.div`
@@ -486,9 +495,9 @@ const StRoomInfoPricebox = styled.div`
   padding: 41px 0 0;
   display: flex;
   justify-content: space-between;
-  border-bottom: 1px solid #F7F7F7;
+  border-bottom: 1px solid #f7f7f7;
   font-size: 16px;
   font-weight: 700;
   line-height: 16px;
-  text-decoration: none solid rgba(0,0,0, 0.87);
+  text-decoration: none solid rgba(0, 0, 0, 0.87);
 `

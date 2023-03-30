@@ -80,14 +80,21 @@ function Post() {
   // file onChange
   const fileChangeHandler = (e) => {
     setProducts((old) => {
-      return { ...old, mainImage: e.target.files[0] }
+      return {
+        ...old,
+        mainImage: e.target.files[0],
+        previewImage: URL.createObjectURL(e.target.files[0]),
+        // 파일 객체를 URL로 변환하여 프리뷰 이미지로 설정
+      }
     })
   }
+  console.log('프리뷰', products.mainImage)
 
   const roomImageChangeHandler = (e, index) => {
     setProducts((old) => {
       const newRoomList = [...old.roomList]
       newRoomList[index].roomImage = e.target.files[0]
+      newRoomList[index].previewImage = URL.createObjectURL(e.target.files[0])
       return {
         ...old,
         roomList: newRoomList,
@@ -140,7 +147,7 @@ function Post() {
     dispatch(__addProducts(formData))
       .then(() => {
         alert('작성완료')
-        // navigate('/product')
+        navigate('/product')
       })
       .catch((error) => {
         alert('실패')
@@ -211,7 +218,7 @@ function Post() {
             />
           </InputLabel>
           <InputLabel>
-            <StNameTag style={{ fontSize: '14px' }}>사장님한마디</StNameTag>
+            <StNameTag>사장님한마디</StNameTag>
             <StInput
               type="text"
               name="ownerComment"
@@ -222,7 +229,7 @@ function Post() {
             />
           </InputLabel>
           <InputLabel>
-            <StNameTag style={{ fontSize: '14px' }}>숙소 이미지</StNameTag>
+            <StNameTag>대표 이미지</StNameTag>
             <FaImage style={{ fontSize: '30px', color: '#f7323f' }} />
             <input
               hidden
@@ -231,186 +238,248 @@ function Post() {
               accept="image/jpg,image/jpeg,image/png"
               onChange={fileChangeHandler}
             />
-            {products.mainImage && (
+            {products.previewImage && (
               <StImagePreview>
-                <img src={products.mainImage} />
+                <PreviewImage src={products.previewImage} alt="Preview" />
               </StImagePreview>
             )}
           </InputLabel>
-          <CheckboxContainer name="category">
-            <CheckboxLabel>
-              <Checkbox
-                type="checkbox"
-                name="spa"
-                checked={products.category.spa}
-                onChange={CategoryCheckHandler}
-              />
-              스파
-            </CheckboxLabel>
-            <CheckboxLabel>
-              <Checkbox
-                type="checkbox"
-                name="miniBar"
-                checked={products.category.miniBar}
-                onChange={CategoryCheckHandler}
-              />
-              미니바
-            </CheckboxLabel>
-            <CheckboxLabel>
-              <Checkbox
-                type="checkbox"
-                name="wifi"
-                checked={products.category.wifi}
-                onChange={CategoryCheckHandler}
-              />
-              와이파이
-            </CheckboxLabel>
-            <CheckboxLabel>
-              <Checkbox
-                type="checkbox"
-                name="bathItem"
-                checked={products.category.bathItem}
-                onChange={CategoryCheckHandler}
-              />
-              욕실물품
-            </CheckboxLabel>
-            <CheckboxLabel>
-              <Checkbox
-                type="checkbox"
-                name="tv"
-                checked={products.category.tv}
-                onChange={CategoryCheckHandler}
-              />
-              티비
-            </CheckboxLabel>
-            <CheckboxLabel>
-              <Checkbox
-                type="checkbox"
-                name="airConditioner"
-                checked={products.category.airConditioner}
-                onChange={CategoryCheckHandler}
-              />
-              에어컨
-            </CheckboxLabel>
-            <CheckboxLabel>
-              <Checkbox
-                type="checkbox"
-                name="refrigerator"
-                checked={products.category.refrigerator}
-                onChange={CategoryCheckHandler}
-              />
-              냉장고
-            </CheckboxLabel>
-            <CheckboxLabel>
-              <Checkbox
-                type="checkbox"
-                name="showerRoom"
-                checked={products.category.showerRoom}
-                onChange={CategoryCheckHandler}
-              />
-              객실샤워실
-            </CheckboxLabel>
-            <CheckboxLabel>
-              <Checkbox
-                type="checkbox"
-                name="tub"
-                checked={products.category.tub}
-                onChange={CategoryCheckHandler}
-              />
-              욕조
-            </CheckboxLabel>
-            <CheckboxLabel>
-              <Checkbox
-                type="checkbox"
-                name="dryer"
-                checked={products.category.dryer}
-                onChange={CategoryCheckHandler}
-              />
-              드라이기
-            </CheckboxLabel>
-            <CheckboxLabel>
-              <Checkbox
-                type="checkbox"
-                name="iron"
-                checked={products.category.iron}
-                onChange={CategoryCheckHandler}
-              />
-              다리미
-            </CheckboxLabel>
-            <CheckboxLabel>
-              <Checkbox
-                type="checkbox"
-                name="electricRiceCooker"
-                checked={products.category.electricRiceCooker}
-                onChange={CategoryCheckHandler}
-              />
-              전기밥솥
-            </CheckboxLabel>
-          </CheckboxContainer>
-          룸1 네임
-          <input
-            type="text"
-            name="roomList[0].roomName"
-            value={products.roomList[0].roomName}
-            onChange={changeInputHandler}
+          <InputLabel>
+            <StNameTag>태그</StNameTag>
+            <CheckboxContainer name="category">
+              <CheckboxLabel>
+                <Checkbox
+                  type="checkbox"
+                  name="spa"
+                  checked={products.category.spa}
+                  onChange={CategoryCheckHandler}
+                />
+                스파
+              </CheckboxLabel>
+              <CheckboxLabel>
+                <Checkbox
+                  type="checkbox"
+                  name="miniBar"
+                  checked={products.category.miniBar}
+                  onChange={CategoryCheckHandler}
+                />
+                미니바
+              </CheckboxLabel>
+              <CheckboxLabel>
+                <Checkbox
+                  type="checkbox"
+                  name="wifi"
+                  checked={products.category.wifi}
+                  onChange={CategoryCheckHandler}
+                />
+                와이파이
+              </CheckboxLabel>
+              <CheckboxLabel>
+                <Checkbox
+                  type="checkbox"
+                  name="bathItem"
+                  checked={products.category.bathItem}
+                  onChange={CategoryCheckHandler}
+                />
+                욕실물품
+              </CheckboxLabel>
+              <CheckboxLabel>
+                <Checkbox
+                  type="checkbox"
+                  name="tv"
+                  checked={products.category.tv}
+                  onChange={CategoryCheckHandler}
+                />
+                티비
+              </CheckboxLabel>
+              <CheckboxLabel>
+                <Checkbox
+                  type="checkbox"
+                  name="airConditioner"
+                  checked={products.category.airConditioner}
+                  onChange={CategoryCheckHandler}
+                />
+                에어컨
+              </CheckboxLabel>
+              <CheckboxLabel>
+                <Checkbox
+                  type="checkbox"
+                  name="refrigerator"
+                  checked={products.category.refrigerator}
+                  onChange={CategoryCheckHandler}
+                />
+                냉장고
+              </CheckboxLabel>
+              <CheckboxLabel>
+                <Checkbox
+                  type="checkbox"
+                  name="showerRoom"
+                  checked={products.category.showerRoom}
+                  onChange={CategoryCheckHandler}
+                />
+                객실샤워실
+              </CheckboxLabel>
+              <CheckboxLabel>
+                <Checkbox
+                  type="checkbox"
+                  name="tub"
+                  checked={products.category.tub}
+                  onChange={CategoryCheckHandler}
+                />
+                욕조
+              </CheckboxLabel>
+              <CheckboxLabel>
+                <Checkbox
+                  type="checkbox"
+                  name="dryer"
+                  checked={products.category.dryer}
+                  onChange={CategoryCheckHandler}
+                />
+                드라이기
+              </CheckboxLabel>
+              <CheckboxLabel>
+                <Checkbox
+                  type="checkbox"
+                  name="iron"
+                  checked={products.category.iron}
+                  onChange={CategoryCheckHandler}
+                />
+                다리미
+              </CheckboxLabel>
+              <CheckboxLabel>
+                <Checkbox
+                  type="checkbox"
+                  name="electricRiceCooker"
+                  checked={products.category.electricRiceCooker}
+                  onChange={CategoryCheckHandler}
+                />
+                전기밥솥
+              </CheckboxLabel>
+            </CheckboxContainer>
+          </InputLabel>
+          <hr
+            style={{
+              width: '800px',
+              border: '1px solid #f7323f',
+            }}
           />
-          룸1 가격
-          <input
-            type="text"
-            name="roomList[0].roomPrice"
-            value={products.roomList[0].roomPrice}
-            onChange={changeInputHandler}
-          />
-          룸1 이미지
-          <input
-            type="file"
-            name="roomList[0].roomImage"
-            accept="image/jpg,image/jpeg,image/png"
-            onChange={(e) => roomImageChangeHandler(e, 0)}
-          />
-          룸2 네임
-          <input
-            type="text"
-            name="roomList[1].roomName"
-            value={products.roomList[1].roomName}
-            onChange={changeInputHandler}
-          />
-          룸2 가격
-          <input
-            type="text"
-            name="roomList[1].roomPrice"
-            value={products.roomList[1].roomPrice}
-            onChange={changeInputHandler}
-          />
-          룸2 이미지
-          <input
-            type="file"
-            name="roomList[1].roomImage"
-            accept="image/jpg,image/jpeg,image/png"
-            onChange={(e) => roomImageChangeHandler(e, 1)}
-          />
-          룸3 네임
-          <input
-            type="text"
-            name="roomList[2].roomName"
-            value={products.roomList[2].roomName}
-            onChange={changeInputHandler}
-          />
-          룸3 가격
-          <input
-            type="text"
-            name="roomList[2].roomPrice"
-            value={products.roomList[2].roomPrice}
-            onChange={changeInputHandler}
-          />
-          룸3 이미지
-          <input
-            type="file"
-            name="roomList[2].roomImage"
-            accept="image/jpg,image/jpeg,image/png"
-            onChange={(e) => roomImageChangeHandler(e, 2)}
-          />
-          <Button type="submit">등록하기</Button>
+          <InputLabel>
+            <StNameTag>객실 이미지</StNameTag>
+            <FaImage style={{ fontSize: '30px', color: '#f7323f' }} />
+            <input
+              hidden
+              type="file"
+              name="roomList[0].roomImage"
+              accept="image/jpg,image/jpeg,image/png"
+              onChange={(e) => roomImageChangeHandler(e, 0)}
+            />
+            {products.roomList[0].previewImage && (
+              <StImagePreview>
+                <PreviewImage src={products.roomList[0].previewImage} alt="Preview" />
+              </StImagePreview>
+            )}
+          </InputLabel>
+          <InputLabel>
+            <StNameTag>객실명</StNameTag>
+            <StInput
+              type="text"
+              name="roomList[0].roomName"
+              value={products.roomList[0].roomName}
+              onChange={changeInputHandler}
+              required
+              placeholder="객실명을 입력해주세요."
+            />
+          </InputLabel>
+          <InputLabel>
+            <StNameTag>객실가격</StNameTag>
+            <StInput
+              type="text"
+              name="roomList[0].roomPrice"
+              value={products.roomList[0].roomPrice}
+              onChange={changeInputHandler}
+              required
+              placeholder="객실가격을 입력해주세요."
+            />
+          </InputLabel>
+          <InputLabel>
+            <StNameTag>객실 이미지</StNameTag>
+            <FaImage style={{ fontSize: '30px', color: '#f7323f' }} />
+            <input
+              hidden
+              type="file"
+              name="roomList[1].roomImage"
+              accept="image/jpg,image/jpeg,image/png"
+              onChange={(e) => roomImageChangeHandler(e, 1)}
+            />
+            {products.roomList[1].previewImage && (
+              <StImagePreview>
+                <PreviewImage src={products.roomList[1].previewImage} alt="Preview" />
+              </StImagePreview>
+            )}
+          </InputLabel>
+          <InputLabel>
+            <StNameTag>객실명</StNameTag>
+            <StInput
+              type="text"
+              name="roomList[1].roomName"
+              value={products.roomList[1].roomName}
+              onChange={changeInputHandler}
+              required
+              placeholder="객실명을 입력해주세요."
+            />
+          </InputLabel>
+          <InputLabel>
+            <StNameTag>객실가격</StNameTag>
+            <StInput
+              type="text"
+              name="roomList[1].roomPrice"
+              value={products.roomList[1].roomPrice}
+              onChange={changeInputHandler}
+              required
+              placeholder="객실가격을 입력해주세요."
+            />
+          </InputLabel>
+          <InputLabel>
+            <StNameTag>객실 이미지</StNameTag>
+            <FaImage style={{ fontSize: '30px', color: '#f7323f' }} />
+            <input
+              hidden
+              type="file"
+              name="roomList[2].roomImage"
+              accept="image/jpg,image/jpeg,image/png"
+              onChange={(e) => roomImageChangeHandler(e, 2)}
+            />
+            {products.roomList[2].previewImage && (
+              <StImagePreview>
+                <PreviewImage src={products.roomList[2].previewImage} alt="Preview" />
+              </StImagePreview>
+            )}
+          </InputLabel>
+          <InputLabel>
+            <StNameTag>객실명</StNameTag>
+            <StInput
+              type="text"
+              name="roomList[2].roomName"
+              value={products.roomList[2].roomName}
+              onChange={changeInputHandler}
+              required
+              placeholder="객실명을 입력해주세요."
+            />
+          </InputLabel>
+          <InputLabel>
+            <StNameTag>객실가격</StNameTag>
+            <StInput
+              type="text"
+              name="roomList[2].roomPrice"
+              value={products.roomList[2].roomPrice}
+              onChange={changeInputHandler}
+              required
+              placeholder="객실가격을 입력해주세요."
+            />
+          </InputLabel>
+          <Wrapper>
+            <SubmitButton type="submit">등록하기</SubmitButton>
+          </Wrapper>
         </StForm>
       </BorderArea>
     </div>
@@ -421,7 +490,7 @@ export default Post
 
 const BorderArea = styled.div`
   width: 1000px;
-  height: 1000px;
+  max-height: none;
 
   margin: 120px auto 50px auto;
   padding: 20px;
@@ -456,18 +525,19 @@ const PostHeader = styled.div`
   color: white;
 `
 
-const CheckboxContainer = styled.div`
+export const CheckboxContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
   width: 740px;
+  align-items: center;
 `
-const Checkbox = styled.input.attrs({ type: 'checkbox' })`
+export const Checkbox = styled.input.attrs({ type: 'checkbox' })`
   appearance: none;
-  width: 15px;
-  height: 15px;
-  border: 1px solid #f7323f;
-  border-radius: 2px;
+  width: 17px;
+  height: 17px;
+  border: 2px solid #f7323f;
+  border-radius: 3px;
 
   &:checked {
     background-color: #f7323f;
@@ -475,12 +545,13 @@ const Checkbox = styled.input.attrs({ type: 'checkbox' })`
   }
 `
 
-const CheckboxLabel = styled.label`
+export const CheckboxLabel = styled.label`
   width: 120px;
   height: 30px;
 
   display: flex;
   user-select: none;
+  align-items: center;
 `
 
 const StNameTag = styled.span`
@@ -488,7 +559,7 @@ const StNameTag = styled.span`
   min-width: 100px;
   height: 40px;
 
-  font-size: 16px;
+  font-size: 14px;
   font-family: 'yg-jalnan';
   font-weight: 200;
   background-color: #f7323f;
@@ -522,6 +593,32 @@ const InputLabel = styled.label`
 `
 
 const StImagePreview = styled.div`
-  width: 500px;
-  height: 500px;
+  margin-top: 20px;
+  width: 320px;
+  height: 320px;
+`
+
+const PreviewImage = styled.img`
+  width: 400px;
+  height: 300px;
+  margin-left: 100px;
+  border-radius: 10px;
+  border: 2px solid #f5f5f5;
+`
+
+const SubmitButton = styled.button`
+  width: 230px;
+  height: 60px;
+  border-radius: 15px;
+  margin-top: 20px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #f7323f;
+
+  font-size: 25px;
+  font-family: 'yg-jalnan';
+  color: white;
 `
