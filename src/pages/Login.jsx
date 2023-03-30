@@ -26,18 +26,6 @@ function Login() {
 
 const submitButtonHandler = async (event) => {
   event.preventDefault();
-  // 서버에 보내기 (POST요청)
-  //await axios.post("http://54.180.144.151/users/login", user);
-  //await apis.post("/users/login", user);
-// };
-
-
-  // 쿠키박기 (위에거는 지우고)
-
-  // const result = await apis.post("/users/login", user);
-  // console.log(user);
-  // cookies.set("token", result.data.token, {path: "/"})
-  // };
 
   try {
     const result = await axios.post("http://54.180.144.151/users/login", user);
@@ -58,22 +46,6 @@ const submitButtonHandler = async (event) => {
       navi("/")
     }
   }, []);
-
-//  로그아웃구현  
-  // <button onClick = {() => {cookies.remove("token");
-  // navi("/");
-  // }}/>
-
-  // 토큰 없으면 해당 페이지 가드
-  // useEffect (() => {
-  // const token = cookies.get("token");
-  // if (!token) {navi("/");}
-  // }, []);
-
-
-
-
-
 
   return (
   <StPageContainer>

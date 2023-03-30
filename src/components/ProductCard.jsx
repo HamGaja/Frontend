@@ -13,7 +13,12 @@ function ProductCard({ image, name, description, price, rating, item }) {
       <InfoWrapper>
         <p style={{ marginTop: '155px' }}>{item.star}</p>
         <p style={{ fontSize: '26px', fontWeight: '700' }}>{item.name}</p>
-        <p style={{ fontSize: '20px', fontWeight: '400' }}>{item.address}</p>
+        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+          <span style={{ fontSize: '20px', fontWeight: '400' }}>{item.address}</span>
+          <span style={{ fontSize: '22px', fontWeight: '700' }}>
+            {item.minRoomPrice} 원
+          </span>
+        </div>
       </InfoWrapper>
     </Card>
   )

@@ -148,7 +148,7 @@ function Register() {
                         color : 'rgb(255,0,85)',
                         marginTop : '10px'
                     }}
-                    display={user.password}>{user.password.length === 0 ? "비밀번호를 입력해주십시오.": ""}</div>
+                    display={user.password}>{user.password.length === 0 ? "8자리 이상 비밀번호를 입력해주십시오.": ""}</div>
                         {/* <label>비밀번호를 입력해주세요.</label> */}
                     </StInputBoxWrapper>
                 
@@ -169,19 +169,9 @@ function Register() {
                             color : 'rgb(255,0,85)',
                             marginTop : '10px'
                         }}
-                    display={confirmPassword}>{confirmPassword.length === 0 ? "비밀번호를 입력해주십시오.": ""}
+                    display={confirmPassword}>{confirmPassword.length === 0 ? "8자리 이상 비밀번호를 입력해주십시오.": ""}
                     </div>
                     
-                    {/* <div 
-                        style={{
-                            display : 'flex',
-                            color : 'rgb(255,0,85)',
-                            marginTop : '10px'
-                        }}
-                    display={confirmPassword}>{confirmPassword === user.password ? "비밀번호가 일치하지 않습니다.": ""}
-                    </div> */}
-                    
-                        {/* <label>비밀번호를 입력해주세요.</label> */}
                     </StInputBoxWrapper>
 
                 <StContentTitleWrapper>
@@ -383,34 +373,3 @@ const StRegisterButton = styled.button`
     border: none;
     cursor: pointer;
 `
-
-
-    // //  닉네임(username)중복확인 API (서버요청)
-    // const duplicationCheckAPI = async (username) => {
-    //     let returnValue;
-    //     await axios.post("http://54.180.144.151/users/check/username", {username: username })
-    //     .then((response)=> {returnValue = response.data})
-        
-    //     .catch(function(error) {
-    //         console.log(error);
-    //         returnValue = true;
-    //     });
-    //     return returnValue
-    // }
-    // //  닉네임(username)중복확인
-    // const duplicationCheck = () => {
-    //     duplicationCheckAPI(user.username)
-    //     .then((response) => {
-    //         // console.log("response -> ", response)
-    //         if(response === false) {
-    //             alert("사용 가능한 닉네임.");
-    //             setUsableName(response);
-    //         }
-    //         else {
-    //             alert("중복된 닉네임입니다.");
-    //             setUsableName(response);
-    //             setUser('');
-    //         }
-    //         // console.log("중복체크");
-    //     })
-    // }

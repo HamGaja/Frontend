@@ -52,7 +52,7 @@ const StFooter = styled.div`
   justify-content: space-between;
 
   background-color: #f5f5f5;
-  display: block;
+  /* display: block; */
 `
 
 const GitBox = styled.div`
