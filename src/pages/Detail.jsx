@@ -23,7 +23,6 @@ function Detail() {
   const { details, isLoading, error } = useSelector((state) => state.products)
   const param = params.id
 
-  console.log('파람', param)
   console.log('디테일입니다', details)
 
   useEffect(() => {
@@ -43,21 +42,17 @@ function Detail() {
     <Wrapper>
       <Header />
       <Top>
-        <ProductImage
-        // src={'/images/home/hotel1.jpg'}
-        >
-          {/* {details.data.imageUrl} */}
-        </ProductImage>
+        <ProductImage src={details?.imageUrl} />
         <ProductInfo>
-          {/* <span>{details.data.star}</span> */}
-          <StName>{details?.data.name}</StName>
-          <p style={{ marginTop: '5px' }}>
+          <span>{details?.star}</span>
+          <StName>{details?.name}</StName>
+          <div style={{ marginTop: '5px' }}>
             <div>
-              {details?.data.star}
-              {details?.data.name}
+              {details?.star}
+              {details?.name}
             </div>
-            <div>{details?.data.address}</div>
-          </p>
+            <div>{details?.address}</div>
+          </div>
           <p style={{ marginTop: '8px' }}></p>
           <div>
             <StEventBox>
@@ -75,11 +70,9 @@ function Detail() {
               >
                 <strong>사장님 한마디</strong>
                 <StOwnerCommentBoxButton>더보기</StOwnerCommentBoxButton>
-                {/* <div>{details.data.ownerComment}</div> */}
+                <div>{details?.ownerComment}</div>
               </div>
-              <StComment style={{ width: '376px ' }}>
-                {details?.data.ownerComment}
-              </StComment>
+              <StComment style={{ width: '376px ' }}>{details?.ownerComment}</StComment>
             </StOwnerCommentBox>
           </div>
         </ProductInfo>
@@ -112,11 +105,10 @@ function Detail() {
 }
 
 function RoomTypeBooking() {
-  // const params = useParams()
-  // const dispatch = useDispatch()
+  const params = useParams()
+  const dispatch = useDispatch()
   const { details } = useSelector((state) => state.products)
-  // const param = params.id
-  // console.log('디테일입니다', details)
+  const param = params.id
 
   // useEffect(() => {
   //   dispatch(__getProductsDetail(+param))
@@ -138,10 +130,7 @@ function RoomTypeBooking() {
           <Calendar />
         </div>
         <OtherRoomCard name="otherRoom">
-          <OtherRoomImg
-          // src="/images/home/hotel1.jpg"
-          // {details.data.roomList[0].roomImage}
-          ></OtherRoomImg>
+          <OtherRoomImg src={details?.roomList?.[0]?.roomImageUrl}></OtherRoomImg>
           <OtherRoomInfo name="info">
             <p
               style={{
@@ -153,17 +142,15 @@ function RoomTypeBooking() {
               }}
             >
               객실명
-              {details?.data.roomList[0].roomName}
+              {details?.roomList?.[0]?.roomName}
             </p>
             <StRoomInfoPricebox>
               <span>가격</span>
               <span style={{ fontSize: '20px' }}>
-                {details?.data.roomList[0].roomPrice}
+                {details?.roomList?.[0]?.roomPrice}
               </span>
             </StRoomInfoPricebox>
-            <ModalRoomInfo
-            // style={{ width: '510px', margin: '12px 0' }}
-            >
+            <ModalRoomInfo style={{ width: '510px', margin: '12px 0' }}>
               객실 이용 안내
             </ModalRoomInfo>
             <StBookingButton>예약</StBookingButton>
@@ -172,98 +159,6 @@ function RoomTypeBooking() {
       </Reservation>
     </Wrapper>
   )
-}
-
-{
-  /* <OtherRoomCard name="otherRoom">
-          <OtherRoomImg src="/images/home/hotel1.jpg" />
-          <OtherRoomInfo name="info">
-            <p
-              style={{
-                fontSize: '20px',
-                fontWeight: '700',
-                lineHeight: '20px',
-                textDecoration: 'none solid rgba(0,0,0,0.87)',
-                height: '37px',
-              }}
-            >
-              객실명
-            </p>
-            <StRoomInfoPricebox>
-              <span>가격</span>
-              <span style={{fontSize: '20px'}}>97,750원</span>
-            </StRoomInfoPricebox>
-            <ModalRoomInfo 
-            // style={{ width: '510px', margin: '12px 0' }}
-            >객실 이용 안내</ModalRoomInfo>
-            <StBookingButton>예약</StBookingButton>
-          </OtherRoomInfo>
-        </OtherRoomCard>
-        <OtherRoomCard name="otherRoom">
-          <OtherRoomImg src="/images/home/hotel1.jpg" />
-          <OtherRoomInfo name="info">
-            <p
-              style={{
-                fontSize: '20px',
-                fontWeight: '700',
-                lineHeight: '20px',
-                textDecoration: 'none solid rgba(0,0,0,0.87)',
-                height: '37px',
-              }}
-            >
-              객실명
-            </p>
-            <StRoomInfoPricebox>
-              <span>가격</span>
-              <span style={{fontSize: '20px'}}>97,750원</span>
-            </StRoomInfoPricebox>
-            <ModalRoomInfo 
-            // style={{ width: '510px', margin: '12px 0' }}
-            >객실 이용 안내</ModalRoomInfo>
-            <StBookingButton>예약</StBookingButton>
-          </OtherRoomInfo>
-        </OtherRoomCard> */
-}
-
-{
-  /* <OtherRoomCard name="otherRoom">
-          <OtherRoomImg src="/images/home/hotel1.jpg" />
-          <OtherRoomInfo name="info">
-            <p
-              style={{
-                fontSize: '20px',
-                fontWeight: 'bold',
-                height: '37px',
-              }}
-            >
-              객실명
-            </p>
-            <div
-              style={{
-                height: '76px',
-                padding: '41px 0 0',
-                display: 'flex',
-                justifyContent: 'space-between',
-              }}
-            >
-              <span>가격</span>
-              <span>97,750원</span>
-            </div>
-            <button style={{ width: '510px', margin: '12px 0' }}>객실 이용 안내</button>
-            <button style={{ width: '510px' }}>예약</button>
-          </OtherRoomInfo>
-        </OtherRoomCard> */
-}
-
-{
-  /* <OtherRoomCard name="otherRoom">
-          <OtherRoomImg src="/images/home/hotel1.jpg" />
-          <OtherRoomInfo name="info"></OtherRoomInfo>
-        </OtherRoomCard>
-        <OtherRoomCard name="otherRoom">
-          <OtherRoomImg src="/images/home/hotel1.jpg" />
-          <OtherRoomInfo name="info"></OtherRoomInfo>
-        </OtherRoomCard> */
 }
 
 function AccommodationInfo() {

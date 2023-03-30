@@ -109,7 +109,7 @@ function Product() {
             name="filer"
             style={{
               width: '296px',
-              height: '400px',
+              height: '260px',
               border: '1px solid #DBDBDB',
               borderRadius: '4px',
               margin: '0 32px 0 32px',
@@ -117,18 +117,6 @@ function Product() {
             }}
           >
             <Wrapper>
-              <DateBox>
-                <h3>날짜</h3>
-                <img
-                  style={{
-                    width: '250px',
-                    objectFit: 'contain',
-                    margin: '5px 15px 0 0',
-                  }}
-                  src="images/product/calendar.jpg"
-                />
-                <hr style={{ bordercolor: '#F5F5F5' }} />
-              </DateBox>
               <CategoryBox>객실 내 시설</CategoryBox>
               <CheckboxList>
                 <CheckboxLabel>
