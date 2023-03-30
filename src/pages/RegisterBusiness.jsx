@@ -204,14 +204,6 @@ function RegisterBusiness() {
                     중복검사
                     </StUsernameCheckButton>
                 </StWrapper>
-                {/* <div 
-                        style={{
-                            display : 'flex',
-                            color : 'rgb(255,0,85)',
-                            marginTop : '10px'
-                        }}
-                    display={user.username}>{user.username.length === 0 ? "닉네임을 입력해주십시오.": ""}
-                    </div> */}
 
                 <StRegisterButton>
                     <span>가입하기</span>
@@ -360,34 +352,3 @@ const StRegisterButton = styled.button`
     border: none;
     cursor: pointer;
 `
-
-
-    // //  닉네임(username)중복확인 API (서버요청)
-    // const duplicationCheckAPI = async (username) => {
-    //     let returnValue;
-    //     await axios.post("http://54.180.144.151/users/check/username", {username: username })
-    //     .then((response)=> {returnValue = response.data})
-        
-    //     .catch(function(error) {
-    //         console.log(error);
-    //         returnValue = true;
-    //     });
-    //     return returnValue
-    // }
-    // //  닉네임(username)중복확인
-    // const duplicationCheck = () => {
-    //     duplicationCheckAPI(user.username)
-    //     .then((response) => {
-    //         // console.log("response -> ", response)
-    //         if(response === false) {
-    //             alert("사용 가능한 닉네임.");
-    //             setUsableName(response);
-    //         }
-    //         else {
-    //             alert("중복된 닉네임입니다.");
-    //             setUsableName(response);
-    //             setUser('');
-    //         }
-    //         // console.log("중복체크");
-    //     })
-    // }
